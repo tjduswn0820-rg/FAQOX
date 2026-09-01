@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>항공보안 FAQ 및 OX 퀴즈</title>
+<style>
+/* =====================================================
+   기본 (Smart Kiosk Vibe)
+===================================================== */
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { margin: 0; padding: 0; width: 100%; min-height: 100%; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Noto Sans KR", sans-serif;
+  background-color: #f2f5f9;
+  background-image: radial-gradient(circle at 50% 0%, #ffffff 0%, #f2f5f9 70%);
+  color: #1a1f27;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+button, input { font-family: inherit; }
+
+.app { width: 100%; min-height: 100vh; min-height: 100dvh; }
+.screen {
+  width: 100%; min-height: 100vh; min-height: 100dvh;
+  padding: env(safe-area-inset-top) 24px calc(30px + env(safe-area-inset-bottom)) 24px;
+  display: flex; flex-direction: column;
+}
+
+/* =====================================================
+   FAQ SCREEN (첫 화면)
+===================================================== */
+.faq-screen { justify-content: flex-start; }
+.header-lang { display: flex; justify-content: flex-end; gap: 8px; margin-bottom: 15px; }
+.lang-btn {
+  background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 6px 12px;
+  font-size: 14px; font-weight: 700; color: #64748b; cursor: pointer; transition: all 0.2s ease;
+}
+.lang-btn.active { background: #005bea; color: white; border-color: #005bea; box-shadow: 0 4px 10px rgba(0, 91, 234, 0.2); }
+
+.lang-warning {
+  background: #fffbeb; border: 1px solid #fde047; border-radius: 16px; padding: 16px;
+  margin-bottom: 20px; text-align: center; color: #b45309; font-size: 14px; font-weight: 800;
+  line-height: 1.5; animation: fadeIn 0.3s ease;
+}
+
+.faq-header { text-align: center; margin-bottom: 30px; }
+.faq-title { font-size: 34px; font-weight: 900; color: #121829; margin: 0 0 10px; letter-spacing: -1px; }
+.faq-subtitle { font-size: 16px; font-weight: 800; color: #005bea; margin: 0 0 5px; }
+.faq-desc { font-size: 15px; color: #5c6b7f; margin: 0; font-weight: 600; word-break: keep-all; }
+
+.faq-categories { display: flex; flex-direction: column; gap: 16px; margin-bottom: 30px; }
+.faq-category-btn {
+  background: white; border-radius: 20px; padding: 20px; display: flex; align-items: center; gap: 16px;
+  font-size: 20px; font-weight: 800; color: #1e293b; box-shadow: 0 12px 30px rgba(20, 30, 50, 0.04); cursor: pointer;
+}
+.faq-category-btn:active { transform: scale(0.97); }
+.faq-category-btn .icon { font-size: 28px; background: #f1f5f9; width: 54px; height: 54px; display: flex; align-items: center; justify-content: center; border-radius: 16px; }
+
+.quiz-banner {
+  margin-top: auto; background: linear-gradient(135deg, #f0f7ff 0%, #e0f2fe 100%);
+  border: 1px solid #bae6fd; border-radius: 24px; padding: 24px; text-align: center; box-shadow: 0 10px 25px rgba(2, 132, 199, 0.1);
+}
+.quiz-banner-text { font-size: 15px; line-height: 1.6; font-weight: 700; color: #0f172a; margin: 0 0 16px; word-break: keep-all; }
+.quiz-banner-text .highlight { color: #0284c7; }
+.start-quiz-btn {
+  width: 100%; padding: 16px; border: none; border-radius: 16px;
+  background: linear-gradient(135deg, #005bea 0%, #0084ff 100%); color: white; font-size: 18px; font-weight: 800;
+  box-shadow: 0 8px 20px rgba(0, 91, 234, 0.25); cursor: pointer; animation: pulse 2s infinite;
+}
+@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+
+/* =====================================================
+   FAQ 상세 리스트 (인라인 뷰)
+===================================================== */
+.faq-list-view {
+  background: white; border-radius: 24px; padding: 24px 20px;
+  box-shadow: 0 10px 30px rgba(20, 30, 50, 0.05); margin-bottom: 20px;
+  animation: fadeIn 0.3s ease;
+}
+.faq-list-title { font-size: 22px; font-weight: 900; color: #0f172a; margin: 0 0 20px 0; text-align: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; }
+
+.faq-list { display: flex; flex-direction: column; gap: 12px; }
+.faq-item { background: #f8fafc; border-radius: 16px; overflow: hidden; border: 1px solid #e2e8f0; }
+.faq-item summary { padding: 16px; font-size: 15px; font-weight: 800; color: #1e293b; cursor: pointer; list-style: none; position: relative; padding-right: 40px; line-height: 1.4; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after { content: "▼"; position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: #005bea; font-size: 14px; }
+.faq-item[open] summary::after { content: "▲"; }
+.faq-item[open] summary { background: #eff6ff; color: #005bea; }
+.faq-item-content { padding: 0 16px 16px; font-size: 14px; line-height: 1.6; color: #475569; margin-top: 10px; }
+.faq-item-content b { color: #005bea; }
+
+.back-btn {
+  width: 100%; padding: 16px; border: none; border-radius: 16px; margin-top: 20px;
+  background: #e2e8f0; color: #475569; font-size: 18px; font-weight: 800; cursor: pointer; transition: background 0.2s;
+}
+.back-btn:active { background: #cbd5e1; }
+
+/* =====================================================
+   공용 버튼 및 UI
+===================================================== */
+.main-button {
+  width: 100%; min-height: 70px; border: none; border-radius: 35px;
+  background: linear-gradient(135deg, #005bea 0%, #0084ff 100%); color: #ffffff; font-size: 20px; font-weight: 800;
+  box-shadow: 0 14px 30px rgba(0, 91, 234, 0.3); cursor: pointer; transition: all 0.2s ease; letter-spacing: -0.5px;
+}
+.main-button:active { transform: scale(0.97); box-shadow: 0 8px 20px rgba(0, 91, 234, 0.2); }
+.main-button:disabled { background: #cbd5e1; box-shadow: none; color: #f1f5f9; cursor: default; }
+.main-button.secondary { background: #e2e8f0; color: #475569; box-shadow: none; }
+.main-button.secondary:active { background: #cbd5e1; }
+.hidden { display: none !important; }
+
+/* =====================================================
+   AIRPORT SCREEN (공항 선택)
+===================================================== */
+.airport-section { background: white; padding: 30px 20px; border-radius: 32px; box-shadow: 0 20px 50px rgba(20, 30, 50, 0.05); margin-top: auto; margin-bottom: auto; }
+.section-heading { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 24px; }
+.section-title { margin: 0; font-size: 20px; font-weight: 800; color: #1a2233; }
+.section-sub { font-size: 13px; color: white; font-weight: 700; background: #ff4757; padding: 4px 10px; border-radius: 20px; }
+.airport-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.airport-button { min-height: 60px; border: 1px solid #e2e8f0; border-radius: 16px; background: #f8fafc; color: #475569; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: all 0.2s; }
+.airport-button.selected { background: #005bea; border-color: #005bea; color: white; box-shadow: 0 10px 20px rgba(0, 91, 234, 0.25); }
+
+/* =====================================================
+   QUIZ SCREEN
+===================================================== */
+.quiz-screen { justify-content: center; }
+.quiz-top { width: 100%; max-width: 760px; margin: 0 auto 30px auto; }
+.quiz-info { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; }
+.quiz-number { font-size: 16px; font-weight: 800; color: #005bea; background: rgba(0, 91, 234, 0.1); padding: 6px 14px; border-radius: 20px; }
+.progress { width: 100%; height: 6px; border-radius: 6px; background: #e2e8f0; overflow: hidden; }
+.progress-bar { width: 0; height: 100%; border-radius: 6px; background: linear-gradient(90deg, #005bea, #00c6fb); transition: width 0.4s; }
+.question-area { width: 100%; max-width: 760px; margin: 0 auto; background: white; padding: 40px 24px; border-radius: 32px; box-shadow: 0 20px 50px rgba(20, 30, 50, 0.05); display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 20px; text-align: center; }
+.question-guide { display: inline-block; padding: 8px 16px; margin-bottom: 20px; border-radius: 12px; background: #f1f5f9; color: #64748b; font-size: 14px; font-weight: 700; }
+.question { margin: 0; font-size: 26px; line-height: 1.4; font-weight: 800; color: #0f172a; word-break: keep-all; }
+.ox-area { width: 100%; max-width: 760px; margin: 0 auto; }
+.ox-buttons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.ox-button { width: 100%; height: 130px; border: 2px solid transparent; border-radius: 32px; background: white; color: #1e293b; font-size: 60px; font-weight: 900; box-shadow: 0 10px 30px rgba(20, 30, 50, 0.04); cursor: pointer; transition: all 0.2s; }
+.ox-button.selected { background: linear-gradient(135deg, #005bea 0%, #0084ff 100%); color: white; box-shadow: 0 16px 32px rgba(0, 91, 234, 0.25); border: none; }
+.explanation-box { width: 100%; margin-top: 16px; padding: 24px; border-radius: 24px; background: rgba(240, 247, 255, 0.8); border: 1px solid rgba(0, 91, 234, 0.1); }
+.explanation-box.incorrect { background: rgba(255, 241, 242, 0.8); border: 1px solid rgba(225, 29, 72, 0.1); }
+.explanation-title { margin: 0 0 10px; font-size: 18px; font-weight: 800; color: #005bea; }
+.explanation-box.incorrect .explanation-title { color: #e11d48; }
+.explanation-text { margin: 0; font-size: 17px; line-height: 1.6; font-weight: 600; color: #334155; word-break: keep-all; }
+.next-button { width: 100%; height: 70px; margin-top: 16px; border: none; border-radius: 35px; background: #0f172a; color: white; font-size: 20px; font-weight: 800; cursor: pointer; }
+
+/* =====================================================
+   RESULT & CONSENT & COMPLETE
+===================================================== */
+.result-screen, .complete-screen { justify-content: center; align-items: center; text-align: center; }
+.result-icon, .complete-icon { width: 100px; height: 100px; margin: 0 auto 24px; border-radius: 30px; background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%); display: flex; align-items: center; justify-content: center; font-size: 50px; }
+.complete-icon { background: linear-gradient(135deg, #fef08a 0%, #fde047 100%); }
+.score-area { background: white; border-radius: 36px; padding: 40px 30px; width: 100%; max-width: 400px; box-shadow: 0 20px 50px rgba(20, 30, 50, 0.05); margin-bottom: 30px; }
+.score { margin: 0; font-size: 80px; line-height: 1; font-weight: 900; letter-spacing: -3px; color: #005bea; }
+.score-unit { margin-top: 12px; color: #64748b; font-size: 16px; font-weight: 700; }
+.result-message { margin: 24px 0 0; color: #334155; font-size: 18px; line-height: 1.6; font-weight: 600; white-space: pre-line;}
+
+.consent-screen { justify-content: flex-start; overflow-y: auto; }
+.consent-header { padding-top: 20px; margin-bottom: 30px; text-align: left; }
+.consent-icon { width: 56px; height: 56px; border-radius: 18px; background: linear-gradient(135deg, #fef08a 0%, #fde047 100%); display: flex; align-items: center; justify-content: center; font-size: 30px; margin-bottom: 20px; }
+.info-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 30px; }
+.info-box { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 12px rgba(38,70,96,.04); border: 1px solid #dce7ef; }
+.info-summary { padding: 18px 17px; font-size: 14px; font-weight: 900; color: #344a5d; cursor: pointer; list-style: none; }
+.info-summary::-webkit-details-marker { display: none; }
+.info-summary::after { content: "＋"; float: right; color: #1769aa; font-weight: 400; font-size: 18px; }
+details[open] .info-summary::after { content: "－"; }
+.info-content { padding: 0 17px 18px; color: #6e7e8a; font-size: 13px; line-height: 1.7; }
+.info-content p { margin: 0 0 10px; }
+.info-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 12px; }
+.info-table th, .info-table td { padding: 9px 8px; border: 1px solid #e2e8ed; text-align: left; vertical-align: top; word-break: keep-all; }
+.info-table th { width: 40%; background: #f5f8fa; color: #536574; font-weight: 900; }
+
+.consent-question { margin: 0 0 12px; font-size: 19px; font-weight: 950; color: #263d51; }
+.consent-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
+.consent-option { display: flex; align-items: center; gap: 13px; min-height: 65px; padding: 14px 16px; border: 1.5px solid #dce5eb; border-radius: 17px; background: white; font-size: 18px; font-weight: 900; color: #34495a; cursor: pointer; transition: border .2s ease, background .2s ease; }
+.consent-option:has(input:checked) { border-color: #2584c4; background: #f0f8fe; color: #1769aa; }
+.consent-option input { width: 23px; height: 23px; margin: 0; accent-color: #1769aa; flex-shrink: 0; }
+
+.consent-warning { margin: 0 0 20px; color: #e11d48; font-size: 14px; font-weight: 700; line-height: 1.5; background: #fff1f2; padding: 12px 16px; border-radius: 12px; border: 1px solid #fecdd3; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+
+.phone-area { background: #eef6fc; padding: 18px; border-radius: 18px; margin-bottom: 20px; border: 1px solid #d8eaf6; animation: phoneOpen .25s ease; }
+@keyframes phoneOpen { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+.phone-label { display: block; margin-bottom: 9px; font-size: 17px; font-weight: 950; color: #2d475d; }
+.phone-input { width: 100%; height: 61px; border: 1px solid #d4e0e8; border-radius: 15px; background: white; padding: 0 15px; font-size: 20px; font-weight: 700; color: #1d3042; outline: none; }
+.phone-input:focus { border-color: #2584c4; box-shadow: 0 0 0 3px rgba(37,132,196,.10); }
+
+/* PC 대응 */
+@media (min-width: 700px) {
+  .screen { max-width: 760px; margin: 0 auto; padding-left: 0; padding-right: 0; }
+  .faq-screen { max-width: 860px; }
+  .airport-grid { grid-template-columns: repeat(3, 1fr); }
+  .question { font-size: 34px; }
+  .ox-button { height: 160px; font-size: 70px; }
+}
+
+/* 로딩 */
+.loading { position: fixed; inset: 0; z-index: 9999; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.spinner { width: 50px; height: 50px; border: 4px solid #e2e8f0; border-top-color: #005bea; border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 20px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- 1. FAQ 화면 -->
+<section id="faqScreen" class="screen faq-screen">
+  <div class="header-lang">
+    <button class="lang-btn active" onclick="changeLanguage('ko', this)">한국어</button>
+    <button class="lang-btn" onclick="changeLanguage('en', this)">English</button>
+    <button class="lang-btn" onclick="changeLanguage('zh', this)">中文</button>
+    <button class="lang-btn" onclick="changeLanguage('ja', this)">日本語</button>
+  </div>
+  
+  <!-- 언어 경고 배너 -->
+  <div id="ui_langWarning" class="lang-warning hidden">
+    📢 아쉽지만 이벤트 응모는 힘들어요!<br>그렇지만 항공보안 규정을 함께 알아보아요!
+  </div>
+
+  <div class="faq-header">
+    <p id="ui_faqSub" class="faq-subtitle">자주 묻는 질문(FAQ)</p>
+    <h1 id="ui_faqTitle" class="faq-title">✈️ 항공보안 FAQ ✈️</h1>
+    <p id="ui_faqDesc" class="faq-desc">궁금한 내용을 미리 확인하고, 더 편리하게 공항보안을 이용하세요!</p>
+  </div>
+
+  <div id="faqCategoryView">
+    <div class="faq-categories">
+      <div class="faq-category-btn" onclick="openFaqList('general')"><div class="icon">✈️</div><span id="ui_catGeneral">기본 이용안내</span></div>
+      <div class="faq-category-btn" onclick="openFaqList('id')"><div class="icon">🪪</div><span id="ui_catId">신분확인 안내</span></div>
+      <div class="faq-category-btn" onclick="openFaqList('security')"><div class="icon">🧳</div><span id="ui_catSec">보안검색 안내</span></div>
+    </div>
+    
+    <div class="quiz-banner">
+      <p class="quiz-banner-text">
+        <span id="ui_bannerTitle">💡 즐거운 연휴, 긴 대기줄에 지치지 마세요!<br>탑승을 기다리시는 동안 방금 읽은 내용으로<br><span class="highlight">간단한 퀴즈를 풀어보세요.</span></span><br>
+        <span id="ui_bannerGiftText">정답을 맞히신 분들 중 추첨을 통해 모바일<br>기프티콘을 선물로 드립니다! 🎁</span>
+      </p>
+      <button id="ui_quizStartBtn" class="start-quiz-btn" onclick="showScreen('startScreen')">👉 1분 퀴즈 풀고 경품 응모하기 (터치)</button>
+    </div>
+  </div>
+
+  <!-- FAQ 인라인 리스트 -->
+  <div id="faqListView" class="faq-list-view hidden">
+    <h2 id="faqListTitle" class="faq-list-title">카테고리명</h2>
+    <div id="faqListContainer" class="faq-list"></div>
+    <button id="ui_backBtn" class="back-btn" onclick="closeFaqList()">이전 페이지로 돌아가기</button>
+  </div>
+</section>
+
+<!-- 2. 공항 선택 화면 -->
+<section id="startScreen" class="screen hidden">
+  <div class="airport-section">
+    <div class="section-heading"><h2 id="ui_aptTitle" class="section-title">출발 공항을 선택해주세요</h2><span id="ui_aptSub" class="section-sub">필수</span></div>
+    <div class="airport-grid" id="ui_aptGrid">
+      <button class="airport-button" onclick="selectAirport(this,'김포공항')">김포</button>
+      <button class="airport-button" onclick="selectAirport(this,'김해공항')">김해</button>
+      <button class="airport-button" onclick="selectAirport(this,'제주공항')">제주</button>
+      <button class="airport-button" onclick="selectAirport(this,'청주공항')">청주</button>
+      <button class="airport-button" onclick="selectAirport(this,'대구공항')">대구</button>
+      <button class="airport-button" onclick="selectAirport(this,'무안공항')">무안</button>
+      <button class="airport-button" onclick="selectAirport(this,'양양공항')">양양</button>
+      <button class="airport-button" onclick="selectAirport(this,'광주공항')">광주</button>
+      <button class="airport-button" onclick="selectAirport(this,'울산공항')">울산</button>
+      <button class="airport-button" onclick="selectAirport(this,'여수공항')">여수</button>
+      <button class="airport-button" onclick="selectAirport(this,'포항경주공항')">포항경주</button>
+      <button class="airport-button" onclick="selectAirport(this,'사천공항')">사천</button>
+      <button class="airport-button" onclick="selectAirport(this,'군산공항')">군산</button>
+      <button class="airport-button" onclick="selectAirport(this,'원주공항')">원주</button>
+    </div>
+  </div>
+  <div class="start-bottom" style="margin-top: 20px;">
+    <button id="startButton" class="main-button" onclick="startQuiz()" disabled><span id="ui_aptNextBtn">퀴즈 시작하기 →</span></button>
+  </div>
+</section>
+
+<!-- 3. 퀴즈 화면 -->
+<section id="quizScreen" class="screen quiz-screen hidden">
+  <div class="quiz-top">
+    <div class="quiz-info"><span id="ui_quizHeader" class="faq-subtitle" style="font-size:16px;">보안 검색 퀴즈</span><span id="questionNumber" class="quiz-number">1 / 5</span></div>
+    <div class="progress"><div id="progressBar" class="progress-bar"></div></div>
+  </div>
+  <div class="question-area"><div id="questionContent"><div id="ui_quizGuide" class="question-guide">맞으면 O · 틀리면 X를 터치하세요</div><h2 id="question" class="question"></h2></div></div>
+  <div class="ox-area">
+    <div class="ox-buttons">
+      <button id="oButton" class="ox-button" onclick="selectAnswer('O')">O</button>
+      <button id="xButton" class="ox-button" onclick="selectAnswer('X')">X</button>
+    </div>
+    <div id="explanationBox" class="explanation-box hidden"><h3 id="ui_expTitle" class="explanation-title">💡 해설</h3><p id="explanationText" class="explanation-text"></p></div>
+    <button id="nextButton" class="next-button hidden" onclick="nextQuestion()"><span id="ui_quizNextBtn">다음 →</span></button>
+  </div>
+</section>
+
+<!-- 4. 결과 화면 -->
+<section id="resultScreen" class="screen result-screen hidden">
+  <div class="result-top"><div class="result-icon">✨</div><h2 id="ui_resTitle" class="faq-title">분석 완료</h2></div>
+  <div class="score-area"><div id="score" class="score">0 / 5</div><div id="ui_resScoreLabel" class="score-unit">보안 퀴즈 점수</div><p id="resultMessage" class="result-message"></p></div>
+  <div class="start-bottom" style="width: 100%; max-width: 400px; margin: 0 auto;">
+    <button id="resultEventBtn" class="main-button" onclick="showScreen('consentScreen')"><span id="ui_resEventBtn">이벤트 응모하기 🎁</span></button>
+    <button id="resultHomeBtn" class="main-button secondary hidden" onclick="location.reload()"><span id="ui_resHomeBtn">처음으로 돌아가기 🏠</span></button>
+  </div>
+</section>
+
+<!-- 5. 개인정보 입력 화면 -->
+<section id="consentScreen" class="screen consent-screen hidden">
+  <div class="consent-header">
+    <div class="consent-icon">🎁</div>
+    <h2 class="faq-title">경품 응모 신청</h2>
+    <p class="faq-subtitle">정보 제공에 동의하시면 이벤트에 참여할 수 있습니다.</p>
+  </div>
+
+  <div class="info-list">
+    <details class="info-box">
+      <summary class="info-summary">1. 개인정보 수집 및 이용 동의</summary>
+      <div class="info-content">
+        <p>동의하지 않을 경우, 경품 응모가 제한될 수 있습니다.</p>
+        <table class="info-table"><tr><th>수집·이용<br>개인정보</th><td>연락처</td></tr><tr><th>수집·이용 목적</th><td>이벤트 진행 및 경품 발송</td></tr><tr><th>보유·이용 기간</th><td>경품 발송 후 1개월 이내</td></tr></table>
+      </div>
+    </details>
+    <details class="info-box">
+      <summary class="info-summary">2. 개인정보 수집 및 이용 안내</summary>
+      <div class="info-content">
+        <p>아래와 같이 개인정보를 수집 및 이용합니다.</p>
+        <table class="info-table"><tr><th>수집·이용<br>개인정보</th><td>연락처</td></tr><tr><th>수집·이용 목적</th><td>이벤트 진행 및 경품 발송</td></tr><tr><th>보유·이용 기간</th><td>경품 발송 후 1개월 이내</td></tr></table>
+      </div>
+    </details>
+    <details class="info-box">
+      <summary class="info-summary">3. 개인정보 처리 위탁 안내</summary>
+      <div class="info-content">
+        <p>아래와 같이 개인정보 처리를 위탁합니다.</p>
+        <table class="info-table"><tr><th>위탁 받는 자</th><td>(주) 기프티콘</td></tr><tr><th>위탁받은 업무</th><td>이벤트 경품 발송</td></tr></table>
+      </div>
+    </details>
+  </div>
+
+  <div>
+    <p class="consent-question">개인정보 수집 및 이용에 동의하시나요?</p>
+    <div class="consent-options">
+      <label class="consent-option"><input type="radio" name="consent" value="yes" onchange="changeConsent('yes')"><span>개인정보 제공에 동의합니다.</span></label>
+      <label class="consent-option"><input type="radio" name="consent" value="no" onchange="changeConsent('no')"><span>동의하지 않고 종료합니다.</span></label>
+    </div>
+    <p id="consentWarning" class="consent-warning hidden">⚠️ 동의하지 않으실 경우, 이벤트 경품 응모가 불가하며 퀴즈 결과만 확인 후 종료됩니다.</p>
+    <div id="phoneArea" class="phone-area hidden">
+      <label class="phone-label">휴대폰 번호 입력</label>
+      <input id="phone" class="phone-input" type="tel" maxlength="13" placeholder="010-0000-0000" oninput="formatPhone(this)">
+      <p style="margin: 9px 0 0; color: #80909c; font-size: 12px; line-height: 1.5;">입력하신 번호는 이벤트 경품 발송 목적으로만 이용됩니다.</p>
+    </div>
+  </div>
+  <div class="start-bottom" style="margin-top: 20px;"><button id="submitButton" class="main-button" onclick="submitConsent()" disabled>선택해주세요</button></div>
+</section>
+
+<!-- 6. 완료 화면 -->
+<section id="completeScreen" class="screen complete-screen hidden">
+  <div id="completeIcon" class="complete-icon">🎁</div><h2 id="completeTitle" class="faq-title">신청 완료!</h2>
+  <p id="completeText" class="faq-desc" style="font-size: 18px; line-height: 1.6; margin-top:20px;"></p>
+</section>
+</div>
+
+<!-- 로딩화면 -->
+<div id="loading" class="loading hidden"><div class="spinner"></div><div id="ui_loadingText" class="loading-text" style="color: #0f172a; font-weight: 800;">데이터 저장 중...</div></div>
+
+<script>
+// ★★★ 여기에 복사해둔 구글 앱스스크립트 주소를 큰따옴표 안에 붙여넣으세요 ★★★
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwoFtsMRwBDxDaj4VAfh3USbOBK4DDivH9qpuFyhDJ88gWQ4htWLinQejUCu3bwssTl5g/exec"; 
+
+let currentLang = 'ko';
+let isEventEligible = true;
+
+/* =====================================================
+   다국어 UI 번역 사전 (UI Dictionary)
+===================================================== */
+const uiDict = {
+  ko: {
+    faqSub: "자주 묻는 질문(FAQ)", faqTitle: "✈️ 항공보안 FAQ ✈️", faqDesc: "궁금한 내용을 미리 확인하고, 더 편리하게 공항보안을 이용하세요!",
+    catGeneral: "기본 이용안내", catId: "신분확인 안내", catSec: "보안검색 안내",
+    bannerTitle: "💡 즐거운 연휴, 긴 대기줄에 지치지 마세요!<br>탑승을 기다리시는 동안 방금 읽은 내용으로<br><span class='highlight'>간단한 퀴즈를 풀어보세요.</span>",
+    bannerGiftText: "정답을 맞히신 분들 중 추첨을 통해 모바일<br>기프티콘을 선물로 드립니다! 🎁",
+    quizStartBtnEvent: "👉 1분 퀴즈 풀고 경품 응모하기 (터치)", quizStartBtnNormal: "👉 항공보안 규정 퀴즈 풀어보기 (터치)",
+    backBtn: "이전 페이지로 돌아가기", aptTitle: "출발 공항을 선택해주세요", aptSub: "필수", aptNextBtn: "퀴즈 시작하기 →",
+    quizHeader: "보안 검색 퀴즈", quizGuide: "맞으면 O · 틀리면 X를 터치하세요", quizNextBtn: "다음 →",
+    resTitle: "분석 완료", resScoreLabel: "보안 퀴즈 점수", resEventBtn: "이벤트 응모하기 🎁", resHomeBtn: "처음으로 돌아가기 🏠",
+    msgPerfect: "완벽합니다! 🎉\n항공보안 상식을 완벽하게 숙지하고 계십니다.", msgGood: "훌륭합니다! 👍\n조금만 더 확인하시면 완벽한 여행이 될 것입니다.", msgTry: "수고하셨습니다! 😊\n공항 이용 전 항공보안 FAQ를 한 번 더 체크해주세요.",
+    expCorrect: "⭕ 맞았습니다!", expIncorrect: "❌ 오답입니다.", loadingText: "데이터 처리 중..."
+  },
+  en: {
+    faqSub: "Frequently Asked Questions", faqTitle: "✈️ Aviation Security FAQ ✈️", faqDesc: "Check in advance for a more convenient airport experience!",
+    catGeneral: "General Guide", catId: "ID Verification", catSec: "Security Screening",
+    bannerTitle: "💡 Don't let long lines tire you out!<br>While waiting to board, <span class='highlight'>take a quick quiz</span><br>based on what you just read.",
+    bannerGiftText: "",
+    quizStartBtnEvent: "", quizStartBtnNormal: "👉 Take the Aviation Security Quiz (Tap)",
+    backBtn: "Go Back", aptTitle: "Please select your departure airport", aptSub: "Required", aptNextBtn: "Start Quiz →",
+    quizHeader: "Security Quiz", quizGuide: "Tap O for True, X for False", quizNextBtn: "Next →",
+    resTitle: "Analysis Complete", resScoreLabel: "Security Quiz Score", resEventBtn: "", resHomeBtn: "Return to Home 🏠",
+    msgPerfect: "Perfect! 🎉\nYou are fully aware of aviation security rules.", msgGood: "Great job! 👍\nJust a little more review will ensure a perfect trip.", msgTry: "Good effort! 😊\nPlease review the FAQ once more before your flight.",
+    expCorrect: "⭕ Correct!", expIncorrect: "❌ Incorrect.", loadingText: "Processing data..."
+  },
+  zh: {
+    faqSub: "常见问题解答(FAQ)", faqTitle: "✈️ 航空安保 FAQ ✈️", faqDesc: "提前了解相关内容，让您的机场安保体验更加便捷！",
+    catGeneral: "基本指南", catId: "身份确认指南", catSec: "安检指南",
+    bannerTitle: "💡 假期愉快，不要因长队而疲惫！<br>在候机时，根据您刚刚阅读的内容<br><span class='highlight'>做一个简单的小测验吧。</span>",
+    bannerGiftText: "",
+    quizStartBtnEvent: "", quizStartBtnNormal: "👉 参加航空安保规定测验 (点击)",
+    backBtn: "返回上一页", aptTitle: "请选择出发机场", aptSub: "必选", aptNextBtn: "开始测验 →",
+    quizHeader: "安保测验", quizGuide: "正确请点击 O，错误请点击 X", quizNextBtn: "下一步 →",
+    resTitle: "分析完成", resScoreLabel: "安保测验得分", resEventBtn: "", resHomeBtn: "返回首页 🏠",
+    msgPerfect: "太棒了！🎉\n您对航空安保常识了如指掌。", msgGood: "做得好！👍\n再多了解一点，您的旅行将更加完美。", msgTry: "辛苦了！😊\n使用机场前，请再次查看航空安保FAQ。",
+    expCorrect: "⭕ 回答正确！", expIncorrect: "❌ 回答错误。", loadingText: "数据处理中..."
+  },
+  ja: {
+    faqSub: "よくある質問(FAQ)", faqTitle: "✈️ 航空保安 FAQ ✈️", faqDesc: "気になる内容を事前に確認し、より快適に空港保安をご利用ください！",
+    catGeneral: "基本利用案内", catId: "本人確認案内", catSec: "保安検査案内",
+    bannerTitle: "💡 楽しい連休、長い待機列に疲れないで！<br>搭乗をお待ちの間に、今読んだ内容で<br><span class='highlight'>簡単なクイズを解いてみましょう。</span>",
+    bannerGiftText: "",
+    quizStartBtnEvent: "", quizStartBtnNormal: "👉 航空保安規定クイズを解く (タップ)",
+    backBtn: "前のページに戻る", aptTitle: "出発空港を選択してください", aptSub: "必須", aptNextBtn: "クイズを始める →",
+    quizHeader: "保安検査クイズ", quizGuide: "正解ならO・不正解ならXをタップ", quizNextBtn: "次へ →",
+    resTitle: "分析完了", resScoreLabel: "保安クイズ スコア", resEventBtn: "", resHomeBtn: "最初に戻る 🏠",
+    msgPerfect: "完璧です！🎉\n航空保安の常識をしっかりと熟知されていますね。", msgGood: "素晴らしいです！👍\nもう少し確認すれば完璧な旅行になりますよ。", msgTry: "お疲れ様でした！😊\n空港をご利用の前に、もう一度FAQをご確認ください。",
+    expCorrect: "⭕ 正解です！", expIncorrect: "❌ 不正解です。", loadingText: "データ処理中..."
+  }
+};
+
+/* =====================================================
+   FAQ & 퀴즈 번역 데이터
+===================================================== */
+// 1. FAQ 데이터 (현재 한국어만 채워져있으며, 다른 언어 칸에 번역본을 넣으시면 됩니다)
+const faqData = {
+  ko: {
+    general: { title: "✈️ 기본 이용안내", items: [
+      { q: "1. 신분확인 및 보안검색은 왜 받아야 하나요?", a: "<b>✓ 주요안내:</b> 항공기 테러 등 위험 상황을 예방하고 승객의 안전을 지키기 위해 '항공보안법'에 따라 실시하는 필수 법적 절차입니다.<br><br><b>✓ 유의사항:</b> 모두의 안전을 위한 필수 과정이므로 다소 번거로우시더라도 너그러운 양해와 협조를 부탁드립니다." },
+      { q: "2. 신분확인 및 보안검색을 거부하거나 협조하지 않을 경우 어떻게 되나요?", a: "<b>✓ 주요안내:</b> 검색 거부 시 규정에 따라 항공기 탑승이 거절될 수 있습니다.<br><br><b>✓ 유의사항:</b> 항공보안요원에게 폭언이나 무리한 행동을 할 경우, 관련 법에 따라 불이익을 받을 수 있으니 배려를 부탁드립니다." },
+      { q: "3. 신분확인과 보안검색은 어떤 순서와 절차로 진행되나요?", a: "<b>✓ 주요안내:</b> ① 신분확인 ➔ ② 짐 검색 ➔ ③ 승객 검색 순으로 진행됩니다.<br><br><b>✓ 상세방법:</b><br>ㆍ1단계(신분확인): 입구에서 탑승권과 신분증 제시<br>ㆍ2단계(짐 검색): 소지품, 겉옷, 가방을 바구니에 담아 X-ray 기기 통과<br>ㆍ3단계(승객 검색): 금속탐지기 통과(※ 필요시 요원의 가벼운 손 검색 추가)" },
+      { q: "4. 보안검색 및 신분확인 시 우선검색를 이용할 수 있는 대상은 누구인가요?", a: "<b>✓ 주요안내:</b> 장애인, 만 80세 이상 노약자, 임산부, 만 24개월 미만 영아 동반승객, 독립유공자 등이 대상입니다.<br><br><b>✓ 상세방법:</b> 만 24개월 미만 영아 동반 시 6인, 그 외 3인까지 함께 이용 가능합니다. 우대 대상자임을 말씀해 주시면 안내해 드립니다." },
+      { q: "5. 보안검색 구역이나 신분확인 구역 내에서 사진 및 동영상 촬영이 가능한가요?", a: "<b>✓ 주요안내:</b> 절대 불가합니다.(국가보안시설 지정)<br><br><b>✓ 유의사항:</b> 보안 장비나 운영 모습이 노출되지 않도록, 기념 촬영은 보안검색을 모두 마친 후 탑승구역에서 진행해 주시기 바랍니다." }
+    ]},
+    id: { title: "🪪 신분확인 안내", items: [
+      { q: "1. 유효한 신분증명서 종류는 무엇인가요?", a: "<b>✓ 주요안내:</b> 국가기관에서 발행한 신분증(사진 부착 필수)이어야 합니다.<br>- 성인: 주민등록증, 운전면허증, 여권 등<br>- 미성년자: 학생증, 청소년증, 재학증명서 등(만 19세 미만만 해당)<br>* 사진 미부착 시 추가 보안질의 가능" },
+      { q: "2. 모바일 신분증(PASS, 정부24 앱 등)으로 탑승이 가능한가요?", a: "<b>✓ 주요안내:</b> 네, 모바일 신분증으로도 탑승이 가능합니다.<br><br><b>✓ 유의사항:</b> 캡처 화면이나 녹화본은 절대 불가합니다. 현장에서 직접 앱을 실행해서 보여주셔야 합니다." },
+      { q: "3. 탑승권과 신분증 이름(영문 포함)이 다를 경우 어떻게 해야 되나요?", a: "<b>✓ 주요안내:</b> 원칙적으로 신분증과 탑승권의 이름이 일치해야 합니다. 오타가 있는 경우, 증빙 서류 확인 후 올바른 탑승권으로 재발급받으셔야 탑승이 가능합니다.<br><br><b>✓ 상세방법:</b> 신분확인 진입 전, 이용하시는 항공사 카운터를 먼저 방문해 주세요." },
+      { q: "4. 유아 및 영아 탑승 시 가족관계증명서나 주민등록등본이 반드시 필요한가요?", a: "<b>✓ 주요안내:</b> 네, 영유아도 주민등록등본, 가족관계증명서, 건강보험증 중 하나가 꼭 필요합니다.<br><br><b>✓ 상세방법:</b> 서류를 깜빡하셨다면 공항 내 또는 인근에 있는 무인민원발급기를 이용해 발급받으실 수 있습니다." },
+      { q: "5. 바이오정보(정맥, 지문) 사전 등록 방법과 이용 대상은 누구인가요?", a: "<b>✓ 주요안내:</b> 만 7세 이상 주민등록이 되어있는 대한민국 국민이라면 누구나 등록 후 신분증 없이 바이오를 이용할 수 있습니다.<br><br><b>✓ 상세방법:</b> 공항 내 바이오정보 셀프등록대(14세 이상부터 가능) 또는 유인등록대(직원이 있는 경우)에서 손바닥 정맥을 등록해 주세요." },
+      { q: "6. 바이오정보를 등록할 때 신분증이 반드시 필요한가요?", a: "<b>✓ 주요안내:</b> 네, 바이오정보 등록 후 최초 이용 시 신분증 확인이 필요합니다.<br><br><b>✓ 유의사항:</b> 신분증 사본으로는 최초 등록 및 확인이 불가하니, 반드시 유효신분증을 챙겨주시기 바랍니다." },
+      { q: "7. 인천공항에서 스마트패스 등록했는데 다시 등록해야 되나요?", a: "<b>✓ 주요안내:</b> 네, 다시 등록해 주셔야 합니다. 인천공항(안면인식)과 그 외 14개 공항(손바닥 정맥)은 서로 다른 시스템입니다.<br>* 14개 공항 : 김포, 김해, 제주, 청주, 대구, 무안, 양양, 광주, 울산, 여수, 포항경주, 사천, 군산, 원주<br><br><b>✓ 상세방법:</b> 이용하시는 노선에 맞춰 국내선 또는 국제선에 위치한 무인 등록대에서 손바닥 정맥을 새롭게 등록해 주세요." },
+      { q: "8. 신분확인 과정에서 얼굴을 확인하는 이유는 무엇인가요?", a: "<b>✓ 주요안내:</b> 탑승객 본인 여부를 정확히 확인하여 타인의 신분증 도용 및 무단 탑승을 방지하기 위함입니다.<br><br><b>✓ 유의사항:</b> 항공보안을 위한 필수 절차로 필요 시 간단한 보안질의가 함께 진행될 수 있으니, 적극적인 협조를 부탁드립니다." },
+      { q: "9. 신분 확인 시 마스크나 선글라스, 모자를 반드시 벗어야 하나요?", a: "<b>✓ 주요안내:</b> 정확한 본인 확인을 위해 잠시 벗어주셔야 합니다.<br><br><b>✓ 상세방법:</b> 얼굴이 잘 보이도록 마스크를 내리거나 모자를 벗어 직원에게 보여주신 후 다시 착용하시면 됩니다." },
+      { q: "10. 비행기 출발 시간이 얼마 안 남았는데 먼저 들어갈 수 있나요?", a: "<b>✓ 주요안내:</b> 현장 대기 순서를 임의로 변경하여 먼저 입장하시는 것은 불가합니다.<br><br><b>✓ 상세방법:</b> 탑승 시간이 임박한 상황이라면, 즉시 이용하시는 항공사 직원에게 상황을 알리고 도움을 요청해 주시기 바랍니다." }
+    ]},
+    security: { title: "🧳 보안검색 안내", items: [
+      { q: "1. 노트북, 태블릿PC 등 전자기기는 왜 가방에서 꺼내야 하나요?", a: "<b>✓ 주요안내:</b> 회로가 복잡한 전자기기들이 겹쳐 있으면 정확한 X-ray 판독이 불가하므로 가방에서 꺼내주셔야 합니다.<br><br><b>✓ 상세방법:</b> 검색대 앞 바구니에 가방과 전자기기를 각각 따로 담아주시면 빠르고 정확하게 보안검색을 마칠 수 있습니다." },
+      { q: "2. 보조배터리나 전자담배는 위탁수하물(부치는 짐)로 넣어도 되나요?", a: "<b>✓ 주요안내:</b> 불가합니다. 보조배터리, 전자담배, 라이터는 화재 위험이 있어 위탁수하물로 부치실 수 없습니다.<br><br><b>✓ 유의사항:</b> 반드시 고객님께서 직접 기내에 휴대하여 탑승해 주셔야 합니다." },
+      { q: "3. 액체류 기내 반입 규정(100ml)은 어떻게 되나요?", a: "<b>✓ 주요안내:</b><br>- 국제선: 100ml 이하 개별 용기에 담아 1인당 1L 투명 비닐 지퍼백 1개에 넣어야 반입 가능합니다.<br>- 국내선: 액체류 반입 제한이 없습니다.(생활용품인 물, 음료수, 화장품 등 반입 가능)<br><br><b>✓ 유의사항:</b> 화학제품 등 위험물의 반입 여부가 불확실한 경우, MSDS(물질안전보건자료) 등을 통해 물질의 성분을 확인한 후 항공사에 반입 가능 여부를 문의하시기 바랍니다." },
+      { q: "4. 직원이 손으로 검색(촉수검색) 하는 건 어떤 경우인가요?", a: "<b>✓ 주요안내:</b> 기기 통과 후 추가 확인이 필요한 경우 촉수검색을 실시할 수 있으며, 항공보안 규정에 따라 항공보안 등급별 무작위 촉수검색도 실시하고 있습니다.<br><br><b>✓ 상세방법:</b> 동성의 보안검색요원이 손으로 짚어가며 확인하는 규정이니 당황하지 마시고 안내에 따라주시면 됩니다." },
+      { q: "5. 몸에 의료용 금속(인공관절 등)이 있는 경우 어떻게 진행되나요?", a: "<b>✓ 주요안내:</b> 보안검색요원에게 의료용 금속이 있다는 사실을 미리 말씀해 주세요.<br><br><b>✓ 상세방법:</b> 기기 경보가 울리더라도 보안검색요원이 휴대용 탐지기와 손 검색(촉수검색)으로 안전하게 확인해 드립니다." },
+      { q: "6. 개인적인 사유로 인해 별도의 공간에서 검색을 받을 수 있나요?", a: "<b>✓ 주요안내:</b> 네, 가능합니다! 종교·신체적 사유나 사생활 보호를 위해 요청하실 수 있습니다.<br><br><b>✓ 상세방법:</b> 보안검색요원에게 '개별 검색'을 요청해 주시면, 별도로 마련된 공간에서 편안하게 진행해 드립니다." },
+      { q: "7. 휠체어 이용 등 거동이 어려운 경우 어떻게 검색을 받나요?", a: "<b>✓ 주요안내:</b> 무리하게 일어나실 필요 없이, 휠체어에 탑승하신 상태 그대로 검색을 받으실 수 있습니다.<br><br><b>✓ 상세방법:</b> 직원이 휴대용 탐지기와 손 검색으로 확인하며, 안전을 위해 휠체어도 별도로 검색합니다." },
+      { q: "8. 임산부도 일반 승객과 동일하게 신체검색을 받나요?", a: "<b>✓ 주요안내:</b> 검사기기는 인체에 무해하며 임산부와 태아에게 안전합니다.<br><br><b>✓ 상세방법:</b> 기기 통과가 걱정되신다면 요원에게 미리 요청하여 손 검색(촉수검색)으로 대체하실 수 있습니다." },
+      { q: "9. 보안검색 중 가방을 열어 확인하는 경우가 있나요?", a: "<b>✓ 주요안내:</b> X-ray 화면만으로 물품 식별이 어렵거나, 기내 반입 금지 물품이 의심될 때 개봉 검색을 진행합니다.<br><br><b>✓ 유의사항:</b> 짐이 겹치면 화면상 오해가 생겨 막상 문제가 없는 경우도 종종 있습니다. 모두의 안전을 위한 절차이니 너그러운 양해 부탁드립니다." },
+      { q: "10. 보안검색 중 가져갈 수 없는 물품을 포기하면 어떻게 처리되나요?", a: "<b>✓ 주요안내:</b> 현장에서 소유권을 포기하신 물품은 사회복지시설에 기증되거나 폐기 처리됩니다.<br><br><b>✓ 상세방법:</b> 아끼는 물건이라면 밖으로 나가 위탁수하물로 다시 부치거나 택배·보관 서비스(공항에 따라 상이)를 이용해 주세요." }
+    ]}
+  },
+  en: { general: { title: "✈️ General Guide", items: [{ q: "1. Translated Question?", a: "Translated Answer." }] }, id: { title: "🪪 ID Verification", items: [] }, security: { title: "🧳 Security Screening", items: [] } },
+  zh: { general: { title: "✈️ 基本指南", items: [{ q: "1. 翻译的问题?", a: "翻译的答案。" }] }, id: { title: "🪪 身份确认指南", items: [] }, security: { title: "🧳 安检指南", items: [] } },
+  ja: { general: { title: "✈️ 基本利用案内", items: [{ q: "1. 翻訳された質問?", a: "翻訳された答え。" }] }, id: { title: "🪪 本人確認案内", items: [] }, security: { title: "🧳 保安検査案内", items: [] } }
+};
+// 번역 데이터가 비어있으면 기본적으로 한국어 텍스트를 사용하도록 폴백 설정
+["en", "zh", "ja"].forEach(lang => {
+  if(faqData[lang].general.items.length < 2) faqData[lang] = faqData.ko;
+});
+
+// 2. 퀴즈 데이터 (다국어 번역 완료)
+const questionPool = [
+{ cat:"신분확인", ans:"X",
+  ko: { q:"모바일 신분증은 캡처 화면을 보여줘도 탑승에 사용할 수 있다.", exp:"현장에서 본인이 직접 모바일 신분증 앱을 실행하여 제시해야 합니다." },
+  en: { q:"You can use a screenshot of your mobile ID for boarding.", exp:"Screenshots are not allowed. You must run the mobile ID app in person." },
+  zh: { q:"可以使用手机电子身份证的截图登机。", exp:"不允许使用截图，必须在现场亲自打开电子身份证APP。" },
+  ja: { q:"モバイル身分証はスクリーンショットを見せても搭乗に使用できる。", exp:"スクリーンショットは不可です。現場でご自身でアプリを起動して提示する必要があります。" }
+},
+{ cat:"신분확인", ans:"O",
+  ko: { q:"신분확인은 타인의 신분증 도용 및 무단 탑승을 방지하기 위한 절차이다.", exp:"탑승객 본인 여부를 정확하게 확인하기 위한 필수 절차입니다." },
+  en: { q:"ID verification is a procedure to prevent ID theft and unauthorized boarding.", exp:"It is a mandatory procedure to verify the identity of the passenger." },
+  zh: { q:"身份确认是为防止他人盗用身份证和无票登机的程序。", exp:"这是准确确认乘客本人身份的必要程序。" },
+  ja: { q:"本人確認は、他人の身分証盗用や無断搭乗を防ぐための手続きである。", exp:"搭乗客本人であることを正確に確認するための必須手続きです。" }
+},
+{ cat:"보안검색", ans:"X",
+  ko: { q:"보조배터리는 위탁수하물에 넣어 부칠 수 있다.", exp:"화재 위험 때문에 위탁수하물로 부칠 수 없으며, 기내에 휴대해야 합니다." },
+  en: { q:"Power banks can be placed in checked baggage.", exp:"Due to fire risk, they cannot be checked in and must be carried on board." },
+  zh: { q:"充电宝可以放入托运行李中托运。", exp:"由于火灾风险，充电宝不可托运，必须随身携带登机。" },
+  ja: { q:"モバイルバッテリーは受託手荷物に入れることができる。", exp:"火災の危険があるため預けることはできず、機内に持ち込む必要があります。" }
+},
+{ cat:"보안검색", ans:"O",
+  ko: { q:"보안검색 중 추가 확인이 필요한 경우 촉수검색이 실시될 수 있다.", exp:"기기 검색 후 추가 확인 시 실시될 수 있으니 협조해 주세요." },
+  en: { q:"A pat-down search may be conducted if additional verification is needed.", exp:"It may be conducted after the scanner check, so please cooperate." },
+  zh: { q:"安检过程中如需进一步确认，可进行人工搜身检查。", exp:"在仪器检查后可能会进行人工搜查，请配合。" },
+  ja: { q:"保安検査中、追加の確認が必要な場合は接触検査が行われることがある。", exp:"機器による検査の後に行われることがあるため、ご協力をお願いします。" }
+},
+{ cat:"보안검색", ans:"X",
+  ko: { q:"휠체어를 이용하는 승객은 반드시 휠체어에서 내려 보안검색을 받아야 한다.", exp:"휠체어에 탑승한 상태로 휴대용 탐지기 등을 통해 검색받을 수 있습니다." },
+  en: { q:"Passengers using wheelchairs must always get out of the wheelchair for screening.", exp:"You can be screened while sitting in the wheelchair using a hand-held detector." },
+  zh: { q:"使用轮椅的乘客必须离开轮椅接受安检。", exp:"乘客可以坐在轮椅上通过便携式探测器接受检查。" },
+  ja: { q:"車椅子をご利用のお客様は、必ず車椅子から降りて保安検査を受けなければならない。", exp:"車椅子に乗ったまま、携帯型探知機などで検査を受けることができます。" }
+}
+];
+
+let selectedAirport = "", questions = [], currentQuestion = 0, score = 0, selectedAnswer = "", answers = [], consent = null;
+
+/* 화면 전환 함수 */
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden'); window.scrollTo(0, 0);
+}
+
+/* =====================================================
+   언어 변경 및 UI 업데이트 로직
+===================================================== */
+function changeLanguage(lang, btn) {
+  currentLang = lang;
+  
+  // 버튼 활성화 UI 변경
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const warning = document.getElementById("ui_langWarning");
+  const bannerGiftText = document.getElementById("ui_bannerGiftText");
+  const quizBtn = document.getElementById("ui_quizStartBtn");
+
+  // 이벤트 참여 가능 여부 설정
+  if(lang === 'ko') {
+    isEventEligible = true;
+    warning.classList.add("hidden");
+    bannerGiftText.style.display = "inline";
+    quizBtn.textContent = uiDict[lang].quizStartBtnEvent;
+  } else {
+    isEventEligible = false;
+    warning.classList.remove("hidden");
+    bannerGiftText.style.display = "none";
+    quizBtn.textContent = uiDict[lang].quizStartBtnNormal;
+  }
+
+  // 정적 UI 텍스트 교체
+  document.getElementById('ui_faqSub').textContent = uiDict[lang].faqSub;
+  document.getElementById('ui_faqTitle').textContent = uiDict[lang].faqTitle;
+  document.getElementById('ui_faqDesc').textContent = uiDict[lang].faqDesc;
+  document.getElementById('ui_catGeneral').textContent = uiDict[lang].catGeneral;
+  document.getElementById('ui_catId').textContent = uiDict[lang].catId;
+  document.getElementById('ui_catSec').textContent = uiDict[lang].catSec;
+  document.getElementById('ui_bannerTitle').innerHTML = uiDict[lang].bannerTitle;
+  document.getElementById('ui_bannerGiftText').innerHTML = uiDict[lang].bannerGiftText;
+  document.getElementById('ui_backBtn').textContent = uiDict[lang].backBtn;
+  document.getElementById('ui_aptTitle').textContent = uiDict[lang].aptTitle;
+  document.getElementById('ui_aptSub').textContent = uiDict[lang].aptSub;
+  document.getElementById('ui_aptNextBtn').textContent = uiDict[lang].aptNextBtn;
+  document.getElementById('ui_quizHeader').textContent = uiDict[lang].quizHeader;
+  document.getElementById('ui_quizGuide').textContent = uiDict[lang].quizGuide;
+  document.getElementById('ui_quizNextBtn').textContent = uiDict[lang].quizNextBtn;
+  document.getElementById('ui_resTitle').textContent = uiDict[lang].resTitle;
+  document.getElementById('ui_resScoreLabel').textContent = uiDict[lang].resScoreLabel;
+  document.getElementById('ui_resEventBtn').textContent = uiDict[lang].resEventBtn;
+  document.getElementById('ui_resHomeBtn').textContent = uiDict[lang].resHomeBtn;
+  document.getElementById('ui_expTitle').textContent = "💡 " + uiDict[lang].faqSub.split("(")[0]; // 해설 타이틀 임시처리
+  document.getElementById('ui_loadingText').textContent = uiDict[lang].loadingText;
+  
+  // 공항 이름도 번역 가능 (현재는 한국어 그대로 유지, 필요시 로직 추가 가능)
+}
+
+/* =====================================================
+   FAQ 인라인 토글 뷰 로직
+===================================================== */
+function openFaqList(key) {
+  const data = faqData[currentLang][key];
+  document.getElementById("faqListTitle").textContent = data.title;
+  
+  const list = document.getElementById("faqListContainer"); 
+  list.innerHTML = "";
+  data.items.forEach(item => {
+    list.innerHTML += `<details class="faq-item"><summary>${item.q}</summary><div class="faq-item-content">${item.a}</div></details>`;
+  });
+
+  document.getElementById("faqCategoryView").classList.add("hidden");
+  document.getElementById("faqListView").classList.remove("hidden");
+  window.scrollTo(0, 0);
+}
+
+function closeFaqList() {
+  document.getElementById("faqListView").classList.add("hidden");
+  document.getElementById("faqCategoryView").classList.remove("hidden");
+  window.scrollTo(0, 0);
+}
+
+/* =====================================================
+   공항 선택 및 퀴즈 로직
+===================================================== */
+function selectAirport(btn, apt) {
+  document.querySelectorAll('.airport-button').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected'); selectedAirport = apt; document.getElementById('startButton').disabled = false;
+}
+
+function startQuiz() {
+  questions = [...questionPool].sort(() => Math.random() - 0.5);
+  currentQuestion = 0; score = 0; answers = [];
+  showScreen("quizScreen"); renderQuestion();
+}
+
+function renderQuestion() {
+  const q = questions[currentQuestion];
+  document.getElementById("questionNumber").textContent = (currentQuestion + 1) + " / " + questions.length;
+  document.getElementById("progressBar").style.width = (((currentQuestion + 1) / questions.length) * 100) + "%";
+  
+  // 현재 언어에 맞는 퀴즈 질문 출력
+  document.getElementById("question").textContent = q[currentLang].q;
+  
+  ['oButton', 'xButton'].forEach(id => document.getElementById(id).classList.remove("selected"));
+  document.getElementById("explanationBox").classList.add("hidden");
+  document.getElementById("nextButton").classList.add("hidden");
+  selectedAnswer = "";
+}
+
+function selectAnswer(ans) {
+  selectedAnswer = ans;
+  ['oButton', 'xButton'].forEach(id => document.getElementById(id).classList.remove("selected"));
+  document.getElementById(ans === "O" ? "oButton" : "xButton").classList.add("selected");
+
+  const q = questions[currentQuestion];
+  const box = document.getElementById("explanationBox");
+  const title = document.querySelector("#explanationBox .explanation-title");
+  
+  if (ans === q.ans) { 
+    box.classList.remove("incorrect"); 
+    title.innerHTML = uiDict[currentLang].expCorrect; 
+    score++; 
+  } else { 
+    box.classList.add("incorrect"); 
+    title.innerHTML = uiDict[currentLang].expIncorrect; 
+  }
+  
+  // 현재 언어에 맞는 해설 출력
+  document.getElementById("explanationText").innerHTML = q[currentLang].exp;
+  box.classList.remove("hidden"); document.getElementById("nextButton").classList.remove("hidden");
+}
+
+function nextQuestion() {
+  currentQuestion++;
+  if (currentQuestion >= questions.length) showResult(); else renderQuestion();
+}
+
+/* =====================================================
+   결과 화면 분기 처리 (이벤트 응모 자격 유무)
+===================================================== */
+function showResult() {
+  showScreen("resultScreen");
+  document.getElementById("score").textContent = score + " / " + questions.length;
+  
+  let msg = "";
+  if(score === 5) msg = uiDict[currentLang].msgPerfect;
+  else if(score >= 3) msg = uiDict[currentLang].msgGood;
+  else msg = uiDict[currentLang].msgTry;
+  document.getElementById("resultMessage").textContent = msg;
+
+  // 이벤트 참여 가능 여부에 따라 버튼 표시 분기
+  if(isEventEligible) {
+    document.getElementById("resultEventBtn").classList.remove("hidden");
+    document.getElementById("resultHomeBtn").classList.add("hidden");
+  } else {
+    document.getElementById("resultEventBtn").classList.add("hidden");
+    document.getElementById("resultHomeBtn").classList.remove("hidden");
+  }
+}
+
+/* 동의 처리 로직 */
+function changeConsent(val) {
+  consent = val;
+  const phoneArea = document.getElementById("phoneArea");
+  const btn = document.getElementById("submitButton");
+  const warning = document.getElementById("consentWarning");
+  
+  btn.disabled = false;
+  
+  if (val === "yes") { 
+    phoneArea.classList.remove("hidden"); 
+    warning.classList.add("hidden");
+    btn.textContent = "경품 응모 신청"; 
+  } else { 
+    phoneArea.classList.add("hidden"); 
+    warning.classList.remove("hidden");
+    btn.textContent = "종료하기"; 
+  }
+}
+
+function formatPhone(input) {
+  let v = input.value.replace(/[^0-9]/g,"");
+  if(v.length > 3 && v.length <= 7) v = v.substring(0,3)+"-"+v.substring(3);
+  else if(v.length > 7) v = v.substring(0,3)+"-"+v.substring(3,7)+"-"+v.substring(7,11);
+  input.value = v;
+}
+
+/* 깃허브 웹앱 전송(Fetch) 로직 */
+function submitConsent() {
+  const phone = document.getElementById("phone").value.replace(/[^0-9]/g,"");
+  if (consent === "yes" && !/^01[0-9]{8,9}$/.test(phone)) return alert("올바른 휴대폰 번호를 입력해주세요.");
+  
+  document.getElementById("loading").classList.remove("hidden");
+  
+  const data = { 
+    airport: selectedAirport, 
+    score: score, 
+    total: questions.length, 
+    consent: consent === "yes", 
+    phone: consent === "yes" ? "'" + phone : "" 
+  };
+
+  fetch(WEB_APP_URL, {
+    method: "POST",
+    mode: "no-cors", 
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  }).then(() => {
+    document.getElementById("loading").classList.add("hidden");
+    showScreen("completeScreen");
+    if (consent === "yes") {
+      document.getElementById("completeIcon").textContent = "🎁"; 
+      document.getElementById("completeTitle").textContent = "신청 완료!";
+      document.getElementById("completeText").innerHTML = "이벤트 응모가 완료되었습니다.<br>입력하신 번호로 경품이 발송됩니다.";
+    } else {
+      document.getElementById("completeIcon").textContent = "✈️"; 
+      document.getElementById("completeTitle").textContent = "이용 감사합니다!";
+      document.getElementById("completeText").innerHTML = "퀴즈가 종료되었습니다.<br>안전하고 즐거운 비행 되시길 바랍니다.";
+    }
+  }).catch(e => {
+    document.getElementById("loading").classList.add("hidden");
+    alert("오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+  });
+}
+</script>
+</body>
+</html>
