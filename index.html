@@ -250,12 +250,9 @@ details[open] .info-summary::after { content: "－"; }
 @keyframes spin { to { transform: rotate(360deg); } }
 </style>
 </head>
-
-<!-- 모바일 사파리 및 안드로이드 브라우저 터치(:active) 즉시 반응을 위한 ontouchstart 속성 추가 -->
 <body ontouchstart="">
 <div class="app">
 
-<!-- 1. FAQ 화면 -->
 <section id="faqScreen" class="screen faq-screen">
   
   <div class="header-lang">
@@ -265,7 +262,6 @@ details[open] .info-summary::after { content: "－"; }
     <button class="lang-btn" onclick="changeLanguage('ja', this)">日本語</button>
   </div>
   
-  <!-- 언어 경고 배너 -->
   <div id="ui_langWarning" class="lang-warning hidden">
     📢 아쉽지만 이벤트 응모는 힘들어요!<br>그렇지만 항공보안 규정을 함께 알아보아요!
   </div>
@@ -288,12 +284,10 @@ details[open] .info-summary::after { content: "－"; }
         <span id="ui_bannerTitle">💡 즐거운 연휴, 긴 대기줄에 지치지 마세요!<br>탑승을 기다리시는 동안 방금 읽은 내용으로<br><span class="highlight">간단한 퀴즈를 풀어보세요.</span></span><br>
         <span id="ui_bannerGiftText">정답을 맞히신 분들 중 추첨을 통해 모바일<br>기프티콘을 선물로 드립니다! 🎁</span>
       </p>
-      <!-- 퀴즈 시작 버튼 -->
       <button id="ui_quizStartBtn" class="start-quiz-btn" onclick="handleQuizStartBtn()">👉 1분 퀴즈 풀고 경품 응모하기 (터치)</button>
     </div>
   </div>
 
-  <!-- FAQ 인라인 리스트 -->
   <div id="faqListView" class="faq-list-view hidden">
     <h2 id="faqListTitle" class="faq-list-title">카테고리명</h2>
     <div id="faqListContainer" class="faq-list"></div>
@@ -301,7 +295,6 @@ details[open] .info-summary::after { content: "－"; }
   </div>
 </section>
 
-<!-- 2. 공항 선택 화면 -->
 <section id="startScreen" class="screen start-screen hidden">
   <div class="airport-section">
     <div class="section-heading"><h2 id="ui_aptTitle" class="section-title">출발 공항을 선택해주세요</h2><span id="ui_aptSub" class="section-sub">필수</span></div>
@@ -327,7 +320,6 @@ details[open] .info-summary::after { content: "－"; }
   </div>
 </section>
 
-<!-- 3. 퀴즈 화면 -->
 <section id="quizScreen" class="screen quiz-screen hidden">
   <div class="quiz-top">
     <div class="quiz-info"><span id="ui_quizHeader" class="faq-subtitle" style="font-size:16px;">보안 검색 퀴즈</span><span id="questionNumber" class="quiz-number">1 / 5</span></div>
@@ -344,7 +336,6 @@ details[open] .info-summary::after { content: "－"; }
   </div>
 </section>
 
-<!-- 4. 결과 화면 -->
 <section id="resultScreen" class="screen result-screen hidden">
   <div class="result-top"><div class="result-icon">✨</div><h2 id="ui_resTitle" class="faq-title">분석 완료</h2></div>
   <div class="score-area"><div id="score" class="score">0 / 5</div><div id="ui_resScoreLabel" class="score-unit">보안 퀴즈 점수</div><p id="resultMessage" class="result-message"></p></div>
@@ -354,7 +345,6 @@ details[open] .info-summary::after { content: "－"; }
   </div>
 </section>
 
-<!-- 5. 개인정보 입력 화면 -->
 <section id="consentScreen" class="screen consent-screen hidden">
   <div class="consent-header">
     <div class="consent-icon">🎁</div>
@@ -402,19 +392,17 @@ details[open] .info-summary::after { content: "－"; }
   <div class="start-bottom" style="margin-top: 20px;"><button id="submitButton" class="main-button" onclick="submitConsent()" disabled>선택해주세요</button></div>
 </section>
 
-<!-- 6. 완료 화면 -->
 <section id="completeScreen" class="screen complete-screen hidden">
   <div id="completeIcon" class="complete-icon">🎁</div><h2 id="completeTitle" class="faq-title">신청 완료!</h2>
   <p id="completeText" class="faq-desc" style="font-size: 18px; line-height: 1.6; margin-top:20px;"></p>
 </section>
 </div>
 
-<!-- 로딩화면 -->
 <div id="loading" class="loading hidden"><div class="spinner"></div><div id="ui_loadingText" class="loading-text" style="color: #0f172a; font-weight: 800;">데이터 저장 중...</div></div>
 
 <script>
 // ★★★ 구글 앱스스크립트 주소 (줄바꿈 없이 한 줄로 들어가야 합니다!) ★★★
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx_ObS7xgi3DgxPr5onqYbC9fJUhRFwGvGdcooCqLE-QGXhS1RASr52nyOkQfZoWXrbJw/exec"; 
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxYtlLFwt-SYtJIEe9ri_ZwecyyeiL_kLMLkFQpRPjL3p4kZpHYmkT_j5Fy9eW9MMRx5Q/exec"; 
 
 let currentLang = 'ko';
 let isEventEligible = true;
@@ -482,7 +470,7 @@ const uiDict = {
 };
 
 /* =====================================================
-   FAQ 전체 다국어 데이터 (한국어, 영어, 중국어, 일본어 번역 완료)
+   FAQ 전체 다국어 데이터 (한국어, 영어, 중국어, 일본어)
 ===================================================== */
 const faqData = {
   ko: {
@@ -513,108 +501,108 @@ const faqData = {
       { q: "5. 몸에 의료용 금속(인공관절 등)이 있는 경우 어떻게 진행되나요?", a: "<b>✓ 주요안내:</b> 보안검색요원에게 의료용 금속이 있다는 사실을 미리 말씀해 주세요.<br><br><b>✓ 상세방법:</b> 기기 경보가 울리더라도 보안검색요원이 휴대용 탐지기와 손 검색(촉수검색)으로 안전하게 확인해 드립니다." },
       { q: "6. 개인적인 사유로 인해 별도의 공간에서 검색을 받을 수 있나요?", a: "<b>✓ 주요안내:</b> 네, 가능합니다! 종교·신체적 사유나 사생활 보호를 위해 요청하실 수 있습니다.<br><br><b>✓ 상세방법:</b> 보안검색요원에게 '개별 검색'을 요청해 주시면, 별도로 마련된 공간에서 편안하게 진행해 드립니다." },
       { q: "7. 휠체어 이용 등 거동이 어려운 경우 어떻게 검색을 받나요?", a: "<b>✓ 주요안내:</b> 무리하게 일어나실 필요 없이, 휠체어에 탑승하신 상태 그대로 검색을 받으실 수 있습니다.<br><br><b>✓ 상세방법:</b> 직원이 휴대용 탐지기와 손 검색으로 확인하며, 안전을 위해 휠체어도 별도로 검색합니다." },
-      { q: "8. 임산부도 일반 승객과 동일하게 신체검색을 받나요?", a: "<b>✓ 주요안내:</b> 검사기기는 인체에 무해하며 임산부와 태아에게 안전합니다.<br><br><b>✓ 상세방법:</b> 기기 통과가 걱정되신다면 요원에게 미리 요청하여 손 검색(촉수검색)으로 대체하실 수 있습니다." },
+      { q: "8. 임산부도 일반 승객과 동일하게 신체검색을 받나요?", a: "<b>✓ 주요안내:</b> 임산부도 보안검색 절차에 따라 신체검색을 받아야 합니다. 일반적인 금속탐지장비는 X-ray를 사용하지 않고 전자기장을 이용하여 금속 물체를 탐지하는 장비로, 정상적인 보안검색 절차에 따라 사용됩니다.<br><br><b>✓ 상세방법:</b> 임신 중이거나 장비 통과가 걱정되는 경우에는 검색요원에게 미리 말씀해 주시면 별도의 검색 방법에 대해 안내받으실 수 있습니다." },
       { q: "9. 보안검색 중 가방을 열어 확인하는 경우가 있나요?", a: "<b>✓ 주요안내:</b> X-ray 화면만으로 물품 식별이 어렵거나, 기내 반입 금지 물품이 의심될 때 개봉 검색을 진행합니다.<br><br><b>✓ 유의사항:</b> 짐이 겹치면 화면상 오해가 생겨 막상 문제가 없는 경우도 종종 있습니다. 모두의 안전을 위한 절차이니 너그러운 양해 부탁드립니다." },
       { q: "10. 보안검색 중 가져갈 수 없는 물품을 포기하면 어떻게 처리되나요?", a: "<b>✓ 주요안내:</b> 현장에서 소유권을 포기하신 물품은 사회복지시설에 기증되거나 폐기 처리됩니다.<br><br><b>✓ 상세방법:</b> 아끼는 물건이라면 밖으로 나가 위탁수하물로 다시 부치거나 택배·보관 서비스(공항에 따라 상이)를 이용해 주세요." }
     ]}
   },
   en: {
-    general: { title: "✈️ General Guide", items: [
-      { q: "1. Why do I need to undergo identity verification and security screening?", a: "<b>✓ Key Info:</b> It is a mandatory legal procedure conducted under the 'Aviation Security Act' to prevent dangerous situations such as aircraft terrorism and to ensure passenger safety.<br><br><b>✓ Note:</b> As this is an essential process for everyone's safety, we ask for your generous understanding and cooperation even if it is somewhat inconvenient." },
-      { q: "2. What happens if I refuse or do not cooperate with identity verification and security screening?", a: "<b>✓ Key Info:</b> If you refuse the screening, you may be denied boarding according to regulations.<br><br><b>✓ Note:</b> If you use abusive language or behave unreasonably toward aviation security personnel, you may face disadvantages under relevant laws, so please be considerate." },
-      { q: "3. What is the order and procedure for identity verification and security screening?", a: "<b>✓ Key Info:</b> The process goes in the order of ① Identity Verification ➔ ② Baggage Screening ➔ ③ Passenger Screening.<br><br><b>✓ Details:</b><br>Step 1 (Identity Verification): Present your boarding pass and ID at the entrance.<br>Step 2 (Baggage Screening): Place belongings, outerwear, and bags in a tray to pass through the X-ray machine.<br>Step 3 (Passenger Screening): Walk through the metal detector (※ Light manual pat-down by security personnel may be added if necessary)." },
-      { q: "4. Who is eligible to use the priority screening lane?", a: "<b>✓ Key Info:</b> Eligible passengers include persons with disabilities, the elderly (aged 80 or older), pregnant women, passengers accompanying infants under 24 months, and persons of independent merit.<br><br><b>✓ Details:</b> Up to 6 companions can use it together when accompanying an infant under 24 months, and up to 3 companions for other eligible individuals. Please inform staff that you are eligible, and we will guide you." },
-      { q: "5. Can I take photos or videos in the security screening or identity verification areas?", a: "<b>✓ Key Info:</b> It is strictly prohibited. (Designated as a national security facility)<br><br><b>✓ Note:</b> To prevent the exposure of security equipment and operations, please take commemorative photos in the boarding area after completing all security screenings." }
+    general: { title: "✈️ General Information", items: [
+      { q: "1. Why are identity verification and security screening required?", a: "<b>✓ Key Information:</b> Identity verification and security screening are mandatory procedures conducted in accordance with the Aviation Security Act to prevent threats such as acts of terrorism against aircraft and to ensure the safety of all passengers.<br><br><b>✓ Important:</b> These procedures are essential for everyone's safety. We appreciate your patience and cooperation, even if they may cause some inconvenience." },
+      { q: "2. What happens if I refuse identity verification or security screening, or do not cooperate?", a: "<b>✓ Key Information:</b> If you refuse security screening, you may be denied boarding in accordance with applicable regulations.<br><br><b>✓ Important:</b> Abusive language, threats, or inappropriate behavior toward aviation security personnel may result in penalties under applicable laws. We kindly ask for your understanding and cooperation." },
+      { q: "3. In what order are identity verification and security screening conducted?", a: "<b>✓ Key Information:</b> The process is conducted in the following order:<br>① Identity Verification ➔ ② Baggage Screening ➔ ③ Passenger Screening<br><br><b>✓ Procedure:</b><br>• Step 1 – Identity Verification: Present your boarding pass and identification document at the entrance.<br>• Step 2 – Baggage Screening: Place your belongings, outerwear, and bags in the screening trays and send them through the X-ray screening equipment.<br>• Step 3 – Passenger Screening: Walk through the metal detector. If necessary, an additional pat-down inspection may be conducted by a security officer." },
+      { q: "4. Who is eligible to use priority screening for identity verification and security screening?", a: "<b>✓ Key Information:</b> Priority screening is available to passengers with disabilities, passengers aged 80 or older, pregnant passengers, passengers accompanying infants under 24 months of age, and persons recognized for distinguished service to Korean independence, among others.<br><br><b>✓ Procedure:</b> When accompanying an infant under 24 months of age, a group of up to six people may use the priority lane together. For other eligible passengers, a group of up to three people may use it together. Please inform a staff member that you are eligible for priority screening, and they will assist you." },
+      { q: "5. Can I take photos or videos in the identity verification or security screening area?", a: "<b>✓ Key Information:</b> No. Photography and video recording are strictly prohibited because these areas are designated as national security facilities.<br><br><b>✓ Important:</b> To prevent exposure of security equipment and security operations, please take commemorative photos only after completing security screening and entering the boarding area." }
     ]},
-    id: { title: "🪪 ID Verification", items: [
-      { q: "1. What are the types of valid identification documents?", a: "<b>✓ Key Info:</b> It must be an ID issued by a government agency (photo attached is required).<br>- Adults: Resident Registration Card, Driver's License, Passport, etc.<br>- Minors: Student ID, Youth ID, Certificate of Enrollment, etc. (Only for those under 19)<br>* Additional security questions may be asked if no photo is attached." },
-      { q: "2. Can I board using a mobile ID (PASS, Government24 app, etc.)?", a: "<b>✓ Key Info:</b> Yes, boarding is possible with a mobile ID.<br><br><b>✓ Note:</b> Captured screenshots or recordings are strictly prohibited. You must run and show the app directly on-site." },
-      { q: "3. What should I do if the name on the boarding pass and ID (including English names) are different?", a: "<b>✓ Key Info:</b> As a rule, the names on your ID and boarding pass must match. If there is a typo, you must have your documentary evidence checked and get a corrected boarding pass reissued to board.<br><br><b>✓ Details:</b> Please visit your airline counter first before proceeding to identity verification." },
-      { q: "4. Is a Family Relations Certificate or Resident Registration Certificate strictly required when boarding with infants and toddlers?", a: "<b>✓ Key Info:</b> Yes, infants and toddlers must also have one of the following: Resident Registration Certificate, Family Relations Certificate, or Health Insurance Card.<br><br><b>✓ Details:</b> If you forgot your documents, you can issue them using an unmanned civil application issuing machine inside or near the airport." },
-      { q: "5. How do I pre-register biometric information (veins, fingerprints), and who is eligible?", a: "<b>✓ Key Info:</b> Any South Korean citizen aged 7 or older with a resident registration can use the biometric system without an ID after registration.<br><br><b>✓ Details:</b> Please register your palm vein at the biometric self-registration kiosk (available for ages 14 and up) or manned registration desk (if staff is present) in the airport." },
-      { q: "6. Is an ID strictly required when registering biometric information?", a: "<b>✓ Key Info:</b> Yes, ID verification is required when using the biometric information for the first time after registration.<br><br><b>✓ Note:</b> Initial registration and verification cannot be done with a copy of an ID, so please ensure you bring a valid physical ID." },
-      { q: "7. I registered for Smart Pass at Incheon Airport, do I need to register again?", a: "<b>✓ Key Info:</b> Yes, you must register again. Incheon Airport (facial recognition) and the other 14 airports (palm vein) use different systems.<br>* 14 Airports: Gimpo, Gimhae, Jeju, Cheongju, Daegu, Muan, Yangyang, Gwangju, Ulsan, Yeosu, Pohang Gyeongju, Sacheon, Gunsan, Wonju.<br><br><b>✓ Details:</b> Please newly register your palm vein at an unmanned kiosk located in the domestic or international terminal, depending on your route." },
-      { q: "8. Why do you check my face during the identity verification process?", a: "<b>✓ Key Info:</b> This is to accurately verify the passenger's identity to prevent ID theft and unauthorized boarding by others.<br><br><b>✓ Note:</b> This is an essential procedure for aviation security, and brief security questions may be asked if necessary. We ask for your active cooperation." },
-      { q: "9. Do I have to take off my mask, sunglasses, or hat during identity verification?", a: "<b>✓ Key Info:</b> You must take them off briefly for accurate identity verification.<br><br><b>✓ Details:</b> Please lower your mask or remove your hat so your face is clearly visible to the staff, and you may put them back on afterward." },
-      { q: "10. My flight departure time is very soon, can I enter first?", a: "<b>✓ Key Info:</b> You cannot arbitrarily change the waiting order on-site to enter first.<br><br><b>✓ Details:</b> If your boarding time is imminent, please immediately notify the staff of the airline you are using and ask for assistance." }
+    id: { title: "🪪 Identity Verification", items: [
+      { q: "1. What types of identification documents are accepted?", a: "<b>✓ Key Information:</b> Only a valid passport is accepted for identity verification." },
+      { q: "2. Can I use a photo or copy of my passport stored on my mobile phone?", a: "<b>✓ Key Information:</b> No. You must present the original, valid passport for identity verification.<br><br><b>✓ Important:</b> A photo, photocopy, scanned copy, or digital image of your passport stored on a mobile phone is not accepted as a valid passport for identity verification." },
+      { q: "3. Can I show my boarding pass on my mobile phone?", a: "<b>✓ Key Information:</b> Yes. You may use a mobile boarding pass issued by your airline. Please show the mobile boarding pass on your phone to the staff during security screening and boarding.<br><br><b>✓ Procedure:</b> Please have the QR code or barcode clearly visible on your screen. Additional verification procedures may be required depending on the airline or airport's operational circumstances." },
+      { q: "4. What should I do if my mobile boarding pass is not visible or my phone battery is dead?", a: "<b>✓ Key Information:</b> If you are unable to present your mobile boarding pass, please ask your airline staff for assistance.<br><br><b>✓ Procedure:</b> If necessary, your boarding pass can be reissued at the airline counter or another designated service point." },
+      { q: "5. What should I do if the name on my boarding pass is different from the name on my passport?", a: "<b>✓ Key Information:</b> In principle, the name on your passport and the name on your boarding pass, including the English spelling, must match. If there is an error, you must have your boarding pass corrected and reissued before you can board." },
+      { q: "6. Can I travel if my passport has expired or has only a short period of validity remaining?", a: "<b>✓ Key Information:</b> An expired passport cannot be used. Even if your passport is still valid, boarding may be restricted depending on the passport validity requirements of your destination country. Please check the destination country's entry requirements and your airline's guidance before departure." },
+      { q: "7. Can I show another person's boarding pass or present a boarding pass on someone else's behalf?", a: "<b>✓ Key Information:</b> No. Each passenger must present their own boarding pass.<br><br><b>✓ Important:</b> During identity verification, your passport and boarding pass are checked together to confirm that you are the actual passenger." },
+      { q: "8. Why does the staff need to check my face during identity verification?", a: "<b>✓ Key Information:</b> Your face is checked to accurately confirm your identity and prevent the use of another person's identification document or unauthorized boarding.<br><br><b>✓ Important:</b> This is a mandatory aviation security procedure. You may also be asked a few brief security questions when necessary. We appreciate your cooperation." },
+      { q: "9. Do I have to remove my mask, sunglasses, or hat during identity verification?", a: "<b>✓ Key Information:</b> Yes. You may be asked to remove them briefly so that the staff can accurately verify your identity.<br><br><b>✓ Procedure:</b> Please lower your mask or remove your sunglasses or hat so that your face is clearly visible to the staff. You may put them back on immediately after verification." },
+      { q: "10. My flight is departing soon. Can I enter ahead of other passengers?", a: "<b>✓ Key Information:</b> No. Passengers may not change the waiting order or enter ahead of others at their own discretion.<br><br><b>✓ Procedure:</b> If your boarding time is approaching, please immediately inform your airline staff of the situation and ask for assistance." }
     ]},
     security: { title: "🧳 Security Screening", items: [
-      { q: "1. Why do I have to take electronic devices like laptops and tablet PCs out of my bag?", a: "<b>✓ Key Info:</b> Electronic devices with complex circuits make accurate X-ray reading impossible if they overlap, so they must be taken out of the bag.<br><br><b>✓ Details:</b> Placing your bag and electronic devices in separate trays before the screening machine will ensure a fast and accurate security check." },
-      { q: "2. Can I put power banks or electronic cigarettes in my checked baggage?", a: "<b>✓ Key Info:</b> No, you cannot. Power banks, electronic cigarettes, and lighters pose a fire risk and cannot be checked in.<br><br><b>✓ Note:</b> You must personally carry them on board into the cabin." },
-      { q: "3. What are the rules for bringing liquids on board (100ml)?", a: "<b>✓ Key Info:</b><br>- International Flights: Only permitted if kept in individual containers of 100ml or less, placed inside one 1L transparent zipper bag per person.<br>- Domestic Flights: No restrictions on liquids. (Daily items like water, beverages, cosmetics, etc., can be brought in.)<br><br><b>✓ Note:</b> If you are unsure whether a hazardous material like a chemical product is permitted, please check the substance ingredients via MSDS (Material Safety Data Sheet) and inquire with your airline." },
-      { q: "4. When do security staff conduct a manual pat-down search?", a: "<b>✓ Key Info:</b> A pat-down may be conducted if additional verification is needed after passing through the machine. Random pat-downs are also conducted based on aviation security levels according to regulations.<br><br><b>✓ Details:</b> This is a standard procedure where a security officer of the same sex checks by hand, so please do not panic and follow their instructions." },
-      { q: "5. What happens if I have medical metal (e.g., artificial joints) in my body?", a: "<b>✓ Key Info:</b> Please inform the security personnel in advance that you have medical metal.<br><br><b>✓ Details:</b> Even if the machine alarm sounds, the security personnel will safely check using a handheld detector and a manual pat-down." },
-      { q: "6. Can I receive screening in a separate space for personal reasons?", a: "<b>✓ Key Info:</b> Yes, you can! You may request this for religious or physical reasons, or to protect your privacy.<br><br><b>✓ Details:</b> If you request a 'private screening' from the security personnel, it will be conducted comfortably in a designated separate space." },
-      { q: "7. How do I get screened if I have difficulty moving, such as using a wheelchair?", a: "<b>✓ Key Info:</b> There is no need to force yourself to stand; you can be screened while remaining seated in your wheelchair.<br><br><b>✓ Details:</b> Staff will check using a handheld detector and a manual pat-down, and the wheelchair will be screened separately for safety." },
-      { q: "8. Do pregnant women undergo the same physical screening as general passengers?", a: "<b>✓ Key Info:</b> The screening machines are harmless to the human body and safe for both the pregnant woman and the fetus.<br><br><b>✓ Details:</b> If you are concerned about walking through the machine, you can request in advance to have it replaced with a manual pat-down by the security staff." },
-      { q: "9. Are there cases where you open a bag for inspection during the security screening?", a: "<b>✓ Key Info:</b> A bag inspection is conducted when it is difficult to identify items just by the X-ray screen, or when prohibited cabin items are suspected.<br><br><b>✓ Note:</b> Sometimes overlapping items create misunderstandings on the screen, even if there are actually no problems. This is a procedure for everyone's safety, so we ask for your generous understanding." },
-      { q: "10. What happens if I surrender an item that cannot be taken through security?", a: "<b>✓ Key Info:</b> Items for which you renounce ownership on-site are donated to social welfare facilities or discarded.<br><br><b>✓ Details:</b> If it is a precious item, please step outside to check it in as luggage again, or use a delivery/storage service (varies by airport)." }
+      { q: "1. Why do I need to remove laptops, tablets, and other electronic devices from my bag?", a: "<b>✓ Key Information:</b> When electronic devices with complex circuitry overlap with other items inside a bag, it may be difficult to accurately interpret the X-ray image. Therefore, you may be required to remove them from your bag.<br><br><b>✓ Procedure:</b> At the security checkpoint, place your bag and electronic devices separately in the screening trays. This helps make the screening process faster and more accurate." },
+      { q: "2. Can I put power banks or electronic cigarettes in my checked baggage?", a: "<b>✓ Key Information:</b> No. Power banks, electronic cigarettes, and lighters may not be placed in checked baggage due to the risk of fire.<br><br><b>✓ Important:</b> These items must be carried with you into the aircraft cabin." },
+      { q: "3. What is the 100 ml rule for liquids in carry-on baggage?", a: "<b>✓ Key Information:</b><br>• International Flights: Liquids must be in individual containers of 100 ml or less and placed in one transparent, resealable plastic bag with a total capacity of up to 1 liter per passenger.<br>• Domestic Flights: There is no general restriction on ordinary liquids such as water, beverages, and cosmetics.<br><br><b>✓ Important:</b> If you are unsure whether a chemical product or other potentially hazardous substance is permitted on board, please check its contents using an MSDS (Material Safety Data Sheet) or similar documentation and contact your airline to confirm whether it may be transported." },
+      { q: "4. When is a pat-down inspection conducted?", a: "<b>✓ Key Information:</b> A pat-down inspection may be conducted when additional verification is required after passing through the screening equipment. Random pat-down inspections may also be conducted in accordance with the applicable aviation security level.<br><br><b>✓ Procedure:</b> A security officer of the same gender will conduct the inspection by checking the body externally by hand. Please do not be alarmed and follow the officer's instructions." },
+      { q: "5. What should I do if I have medical metal implants, such as an artificial joint?", a: "<b>✓ Key Information:</b> Please inform the security officer in advance that you have a medical metal implant.<br><br><b>✓ Procedure:</b> Even if the screening equipment triggers an alarm, the security officer can safely complete the inspection using a handheld detector and a pat-down inspection." },
+      { q: "6. Can I request to be screened in a private area for personal reasons?", a: "<b>✓ Key Information:</b> Yes. You may request private screening for religious or physical reasons, or to protect your privacy.<br><br><b>✓ Procedure:</b> Please ask a security officer for “private screening.” The inspection will be conducted in a separate designated area." },
+      { q: "7. How is security screening conducted for passengers who use wheelchairs or have difficulty moving?", a: "<b>✓ Key Information:</b> You do not need to stand up if doing so is difficult. You may remain seated in your wheelchair during the screening.<br><br><b>✓ Procedure:</b> A security officer will conduct the screening using a handheld detector and a pat-down inspection. The wheelchair will also be screened separately for safety purposes." },
+      { q: "8. Do pregnant passengers undergo the same security screening as other passengers?", a: "<b>✓ Key Information:</b> Standard metal detection equipment does not use X-rays. It detects metal objects using an electromagnetic field and is used as part of normal security screening procedures.<br><br><b>✓ Procedure:</b> If you are pregnant or have concerns about passing through the screening equipment, please inform a security officer in advance. The officer will explain any available alternative screening methods." },
+      { q: "9. Why is my bag sometimes opened during security screening?", a: "<b>✓ Key Information:</b> Your bag may be opened for inspection when an item cannot be clearly identified on the X-ray image or when a prohibited item is suspected.<br><br><b>✓ Important:</b> Items overlapping inside a bag may sometimes create an unclear or misleading X-ray image even when there is no prohibited item. We appreciate your understanding and cooperation, as this procedure is conducted for everyone's safety." },
+      { q: "10. What happens to an item that I surrender because it is not permitted through security?", a: "<b>✓ Key Information:</b> Items that you voluntarily surrender at the security checkpoint may be donated to social welfare facilities or disposed of.<br><br><b>✓ Procedure:</b> If the item is important to you, you may leave the security area and place it in checked baggage, or use a parcel delivery or storage service where available. Available services may vary by airport." }
     ]}
   },
   zh: {
-    general: { title: "✈️ 基本指南", items: [
-      { q: "1. 为什么必须进行身份验证和安全检查？", a: "<b>✓ 主要指南：</b> 为了预防劫机等危险情况并保障乘客安全，这是根据《航空保安法》实施的法定强制程序。<br><br><b>✓ 注意事项：</b> 由于这是为了所有人的安全而进行的必要程序，即使有些繁琐，也恳请您的宽容理解与配合。" },
-      { q: "2. 如果拒绝或不配合身份验证和安全检查，会怎样？", a: "<b>✓ 主要指南：</b> 如果拒绝接受检查，根据规定可能会被拒绝登机。<br><br><b>✓ 注意事项：</b> 如果对航空安保人员使用辱骂性语言或做出无理行为，可能会根据相关法律受到不利影响，请您给予体谅。" },
-      { q: "3. 身份验证和安全检查的顺序和流程是怎样的？", a: "<b>✓ 主要指南：</b> 按照 ① 身份验证 ➔ ② 行李检查 ➔ ③ 旅客检查 的顺序进行。<br><br><b>✓ 详细步骤：</b><br>第一步（身份验证）：在入口处出示登机牌和身份证件<br>第二步（行李检查）：将随身物品、外套和包放入安检筐，通过X光机<br>第三步（旅客检查）：通过金属探测门（※ 如有必要，安检人员会增加轻柔的手工检查）" },
-      { q: "4. 谁可以使用安检及身份验证的优先通道？", a: "<b>✓ 主要指南：</b> 适用对象包括残疾人、80岁及以上的老年人、孕妇、携带24个月以下婴幼儿的乘客、独立有功者等。<br><br><b>✓ 详细步骤：</b> 携带24个月以下婴幼儿时，最多可有6名同行者共同使用；其他情况最多可有3名同行者使用。请告知工作人员您符合优待条件，我们将为您提供引导。" },
-      { q: "5. 可以在安检区或身份验证区内拍照或录像吗？", a: "<b>✓ 主要指南：</b> 绝对禁止。（该区域被指定为国家安全设施）<br><br><b>✓ 注意事项：</b> 为了防止安保设备及操作画面泄露，请在完成所有安检进入候机区后再进行合影留念。" }
+    general: { title: "✈️ 一般事项", items: [
+      { q: "1. 为什么必须接受身份核验和安全检查？", a: "<b>✓ 主要说明：</b> 为预防航空器恐怖袭击等危险情况并保障旅客安全，根据《航空保安法》，身份核验和安全检查属于必须实施的法定程序。<br><br><b>✓ 注意事项：</b> 这是保障所有旅客安全的必要程序。即使给您带来一些不便，也敬请理解并积极配合。" },
+      { q: "2. 如果拒绝身份核验、安全检查或不配合检查，会怎么样？", a: "<b>✓ 主要说明：</b> 如拒绝接受安全检查，根据相关规定，您可能会被拒绝登机。<br><br><b>✓ 注意事项：</b> 如对航空安保人员辱骂、威胁或采取不当行为，可能会依据相关法律受到处罚。敬请理解并配合工作人员。" },
+      { q: "3. 身份核验和安全检查按照什么顺序进行？", a: "<b>✓ 主要说明：</b> 按以下顺序进行：<br>① 身份核验 ➔ ② 行李检查 ➔ ③ 旅客安全检查<br><br><b>✓ 具体方法：</b><br>• 第1步－身份核验： 在入口处出示登机牌和身份证明文件。<br>• 第2步－行李检查： 请将随身物品、外套和行李分别放入安检筐，通过X光安检设备检查。<br>• 第3步－旅客安全检查： 请通过金属探测门。如有需要，安保人员可能会进一步进行人工触检。" },
+      { q: "4. 哪些旅客可以使用身份核验及安全检查的优先通道？", a: "<b>✓ 主要说明：</b> 残障人士、80周岁以上老年旅客、孕妇、携带未满24个月婴儿的旅客、韩国独立有功者等可使用优先通道。<br><br><b>✓ 具体方法：</b> 携带未满24个月婴儿时，最多可6人一同使用优先通道；其他优待对象最多可3人一同使用。请向工作人员说明您属于优先服务对象，我们将为您提供指引。" },
+      { q: "5. 可以在安全检查区或身份核验区内拍照或录像吗？", a: "<b>✓ 主要说明：</b> 不可以。严禁拍照和录像。（该区域属于国家安全设施）<br><br><b>✓ 注意事项：</b> 为防止安检设备及安保作业情况外泄，请在完成全部安全检查并进入候机区域后再进行纪念拍摄。" }
     ]},
-    id: { title: "🪪 身份确认指南", items: [
-      { q: "1. 有效身份证件的种类有哪些？", a: "<b>✓ 主要指南：</b> 必须是由国家机构颁发的身份证件（必须附有照片）。<br>- 成年人：居民身份证、驾驶证、护照等<br>- 未成年人：学生证、青少年证、在校证明等（仅限19岁以下）<br>* 若未附照片，可能会进行额外的安保询问。" },
-      { q: "2. 可以使用电子身份证（PASS、政府24应用程序等）登机吗？", a: "<b>✓ 主要指南：</b> 可以，允许使用电子身份证登机。<br><br><b>✓ 注意事项：</b> 绝对禁止使用截图或录屏。您必须在现场直接打开应用程序进行展示。" },
-      { q: "3. 如果登机牌和身份证件上的姓名（包括英文）不一致怎么办？", a: "<b>✓ 主要指南：</b> 原则上，身份证件与登机牌上的姓名必须一致。如果存在拼写错误，在核对证明文件后，您必须重新打印正确的登机牌才能登机。<br><br><b>✓ 详细步骤：</b> 在进行身份验证前，请先前往您乘坐的航空公司柜台进行处理。" },
-      { q: "4. 携带婴幼儿登机时，必须提供家庭关系证明或居民户口簿（居民登记副本）吗？", a: "<b>✓ 主要指南：</b> 是的，婴幼儿也必须提供居民户口簿（居民登记副本）、家庭关系证明、健康保险证中的任意一种。<br><br><b>✓ 详细步骤：</b> 如果您忘记携带文件，可以使用机场内或附近的无人自助民政发证机进行打印。" },
-      { q: "5. 生物识别信息（静脉、指纹）的预先注册方法及适用对象是什么？", a: "<b>✓ 主要指南：</b> 凡年满7岁且完成居民登记的大韩民国公民，在注册后均可免证件使用生物识别系统。<br><br><b>✓ 详细步骤：</b> 请在机场内的生物识别信息自助注册机（适用14岁及以上）或人工注册柜台（有工作人员时）注册您的手掌静脉信息。" },
-      { q: "6. 注册生物识别信息时，必须提供身份证件吗？", a: "<b>✓ 主要指南：</b> 是的，注册生物识别信息后首次使用时，需要核验身份证件。<br><br><b>✓ 注意事项：</b> 使用身份证件复印件无法进行首次注册和核验，请务必携带有效的实体身份证件。" },
-      { q: "7. 我在仁川机场注册了Smart Pass，还需要再次注册吗？", a: "<b>✓ 主要指南：</b> 是的，您需要重新注册。仁川机场（面部识别）与其他14个机场（手掌静脉）使用不同的系统。<br>* 14个机场：金浦、金海、济州、清州、大邱、务安、襄阳、光州、蔚山、丽水、浦项庆州、泗川、群山、原州<br><br><b>✓ 详细步骤：</b> 请根据您的航线，在位于国内线或国际线的无人自助注册机上重新注册您的手掌静脉。" },
-      { q: "8. 身份验证过程中为什么要核对人脸？", a: "<b>✓ 主要指南：</b> 为了准确确认乘客本人身份，防止他人盗用身份证件及非法登机。<br><br><b>✓ 注意事项：</b> 这是保障航空安全的必要程序，如有必要可能会同时进行简单的安保询问，请您积极配合。" },
-      { q: "9. 身份验证时必须摘下口罩、墨镜或帽子吗？", a: "<b>✓ 主要指南：</b> 为了准确进行本人确认，请您暂时摘下。<br><br><b>✓ 详细步骤：</b> 请拉下口罩或摘下帽子，确保工作人员能清楚看到您的脸，确认完毕后再重新佩戴。" },
-      { q: "10. 距离航班起飞时间不多了，我可以先插队进去吗？", a: "<b>✓ 主要指南：</b> 不可随意更改现场排队顺序优先进入。<br><br><b>✓ 详细步骤：</b> 如果登机时间紧迫，请立即告知您所搭乘航班的航空公司工作人员并请求协助。" }
+    id: { title: "🪪 身份核验", items: [
+      { q: "1. 可以使用哪些有效身份证明文件？", a: "<b>✓ 主要说明：</b> 身份核验时仅接受有效护照。" },
+      { q: "2. 可以使用手机拍摄的护照照片或护照复印件吗？", a: "<b>✓ 主要说明：</b> 不可以。身份核验时必须出示本人有效护照原件。<br><br><b>✓ 注意事项：</b> 护照照片、复印件、扫描件以及保存在手机中的护照图片等，均不能作为身份核验所使用的有效护照。" },
+      { q: "3. 可以用手机出示登机牌吗？", a: "<b>✓ 主要说明：</b> 可以。您可以使用航空公司签发的电子登机牌。进行安全检查及登机时，请向工作人员出示手机上的电子登机牌。<br><br><b>✓ 具体方法：</b> 请提前打开电子登机牌页面，确保二维码或条形码清晰可见。根据航空公司或机场的实际运营情况，可能需要进行额外确认。" },
+      { q: "4. 如果电子登机牌无法显示或手机没电了，该怎么办？", a: "<b>✓ 主要说明：</b> 如果无法出示电子登机牌，请向您所乘航空公司的工作人员寻求帮助。<br><br><b>✓ 具体方法：</b> 必要时，可前往航空公司柜台等地点重新办理或打印登机牌。" },
+      { q: "5. 登机牌上的姓名与护照姓名（包括英文拼写）不一致怎么办？", a: "<b>✓ 主要说明：</b> 原则上，护照上的姓名与登机牌上的姓名，包括英文拼写，必须一致。如有拼写错误等情况，须重新办理正确的登机牌后方可登机。" },
+      { q: "6. 护照已过期或剩余有效期较短，还可以登机吗？", a: "<b>✓ 主要说明：</b> 已过期的护照不能使用。即使护照尚未过期，如果剩余有效期不符合目的地国家的入境要求，也可能被限制登机。出发前请务必确认目的地国家的入境规定及航空公司的相关要求。" },
+      { q: "7. 可以出示他人的登机牌，或者替他人出示登机牌吗？", a: "<b>✓ 主要说明：</b> 不可以。必须出示实际乘机旅客本人的登机牌。<br><br><b>✓ 注意事项：</b> 身份核验时，工作人员会同时核对护照和登机牌，以确认乘机人身份。" },
+      { q: "8. 身份核验时为什么需要确认旅客的面部？", a: "<b>✓ 主要说明：</b> 为准确确认旅客本人身份，防止冒用他人证件及非法登机。<br><br><b>✓ 注意事项：</b> 这是航空安保的必要程序。必要时，工作人员可能会进行简短的安保问询，敬请积极配合。" },
+      { q: "9. 身份核验时必须摘下口罩、太阳镜或帽子吗？", a: "<b>✓ 主要说明：</b> 为准确确认本人身份，需要暂时摘下或移开相关物品。<br><br><b>✓ 具体方法：</b> 请暂时拉下口罩，或摘下太阳镜、帽子，使工作人员能够清楚看到您的面部。确认完成后即可重新佩戴。" },
+      { q: "10. 我的航班马上就要起飞了，可以优先进入吗？", a: "<b>✓ 主要说明：</b> 不可以擅自改变现场排队顺序或自行优先进入。<br><br><b>✓ 具体方法：</b> 如果您的登机时间已经临近，请立即向所乘航空公司的工作人员说明情况并寻求帮助。" }
     ]},
-    security: { title: "🧳 安检指南", items: [
-      { q: "1. 为什么要把笔记本电脑、平板电脑等电子设备从包里拿出来？", a: "<b>✓ 主要指南：</b> 如果电路复杂的电子设备重叠放置，X光机将无法进行准确判读，因此必须从包里拿出来。<br><br><b>✓ 详细步骤：</b> 请将包和电子设备分别放入安检机前的托盘中，这样能更快、更准确地完成安检。" },
-      { q: "2. 充电宝或电子烟可以放入托运行李中吗？", a: "<b>✓ 主要指南：</b> 不可以。充电宝、电子烟、打火机存在火灾风险，禁止作为托运行李托运。<br><br><b>✓ 注意事项：</b> 您必须亲自将它们作为随身行李带入客舱。" },
-      { q: "3. 液体物品携带登机规定（100ml）是怎样的？", a: "<b>✓ 主要指南：</b><br>- 国际航班：必须盛放在容量不超过100毫升的独立容器中，且每人限带1个容量为1升的透明塑料拉链袋。<br>- 国内航班：对携带液体没有限制。（允许携带水、饮料、化妆品等生活用品）<br><br><b>✓ 注意事项：</b> 如果不确定是否允许携带化学产品等危险物品，请通过MSDS（化学品安全技术说明书）等确认物质成分后，向航空公司咨询是否可携带。" },
-      { q: "4. 在什么情况下工作人员会进行手工检查（搜身）？", a: "<b>✓ 主要指南：</b> 通过安检门后如需进一步确认，可进行手工检查；此外，也会根据航空安保规定按不同安保级别进行随机的手工抽查。<br><br><b>✓ 详细步骤：</b> 按照规定，将由同性的安检人员用手进行触摸检查，请不要慌张，听从引导即可。" },
-      { q: "5. 如果体内有医疗用金属（如人工关节等），该怎么处理？", a: "<b>✓ 主要指南：</b> 请提前告知安检人员您体内有医疗用金属。<br><br><b>✓ 详细步骤：</b> 即使安检仪器发出警报，安检人员也会使用手持探测器和手工检查（搜身）来安全地为您确认。" },
-      { q: "6. 由于个人原因，可以在单独的空间接受检查吗？", a: "<b>✓ 主要指南：</b> 可以的！您可以基于宗教、身体原因或保护隐私的要求提出申请。<br><br><b>✓ 详细步骤：</b> 如果您向安检人员申请“单独检查”，我们会在专门设立的空间内为您提供舒适的检查过程。" },
-      { q: "7. 使用轮椅等行动不便的乘客如何接受检查？", a: "<b>✓ 主要指南：</b> 您无需勉强起身，可以直接坐在轮椅上接受检查。<br><br><b>✓ 详细步骤：</b> 工作人员将使用手持探测器和手工检查进行确认，为了安全起见，轮椅也会单独接受检查。" },
-      { q: "8. 孕妇也需要和普通乘客一样接受身体检查吗？", a: "<b>✓ 主要指南：</b> 检查设备对人体无害，对孕妇和胎儿都是安全的。<br><br><b>✓ 详细步骤：</b> 如果您担心通过安检门，可以提前向工作人员申请使用手工检查（搜身）代替。" },
-      { q: "9. 安检过程中会有开包检查的情况吗？", a: "<b>✓ 主要指南：</b> 当仅凭X光画面难以识别物品，或者怀疑有禁止携带登机的物品时，我们会进行开包检查。<br><br><b>✓ 注意事项：</b> 行李重叠有时会在画面上引起误解，实际上往往没有问题。这是为了大家的安全而设定的程序，敬请您的宽容与理解。" },
-      { q: "10. 如果放弃了安检中不允许携带的物品，会如何处理？", a: "<b>✓ 主要指南：</b> 您在现场放弃所有权的物品，将被捐赠给社会福利机构或做销毁处理。<br><br><b>✓ 详细步骤：</b> 如果是珍贵的物品，请您离开安检区重新办理托运，或使用快递/寄存服务（因机场而异）。" }
+    security: { title: "🧳 安全检查", items: [
+      { q: "1. 为什么要把笔记本电脑、平板电脑等电子设备从包内取出？", a: "<b>✓ 主要说明：</b> 电子设备内部电路较为复杂，如果与其他物品重叠放置，可能会影响X光图像的准确判读，因此需要将电子设备从包内取出。<br><br><b>✓ 具体方法：</b> 请在安检通道前将行李和电子设备分别放入不同的安检筐内。这样可以更加快速、准确地完成安全检查。" },
+      { q: "2. 充电宝或电子烟可以放入托运行李吗？", a: "<b>✓ 主要说明：</b> 不可以。充电宝、电子烟及打火机存在火灾风险，不得放入托运行李。<br><br><b>✓ 注意事项：</b> 请务必由旅客本人随身携带进入客舱。" },
+      { q: "3. 随身携带液体的100毫升规定是什么？", a: "<b>✓ 主要说明：</b><br>• 国际航班： 液体须装在单个容量不超过100毫升的容器中，并统一放入每位旅客限带1个、容量不超过1升的透明可重复密封塑料袋中。<br>• 国内航班： 对水、饮料、化妆品等普通生活用液体原则上没有液体容量限制。<br><br><b>✓ 注意事项：</b> 如果无法确定化学制品等危险物品是否可以携带，请通过MSDS（化学品安全技术说明书）等资料确认物质成分后，再向航空公司确认是否可以携带。" },
+      { q: "4. 什么情况下工作人员会进行人工触检？", a: "<b>✓ 主要说明：</b> 通过安检设备后，如需进一步确认，可能会进行人工触检。此外，根据航空安保等级，也可能实施随机人工触检。<br><br><b>✓ 具体方法：</b> 将由与旅客同性别的安保人员通过手部触检方式进行确认。请不要惊慌，并按照工作人员的指引配合检查。" },
+      { q: "5. 身体内有医用金属物（如人工关节）时，如何接受安检？", a: "<b>✓ 主要说明：</b> 请提前告知安保人员您体内装有医用金属物。<br><br><b>✓ 具体方法：</b> 即使安检设备发出警报，安保人员也会使用手持式探测器及人工触检方式安全地完成检查。" },
+      { q: "6. 因个人原因可以要求在单独的空间接受检查吗？", a: "<b>✓ 主要说明：</b> 可以。因宗教、身体原因或出于隐私保护需要，您可以申请单独检查。<br><br><b>✓ 具体方法：</b> 请向安保人员提出“单独检查”的要求。工作人员将引导您前往另外设置的检查空间进行检查。" },
+      { q: "7. 使用轮椅或行动不便的旅客如何接受安全检查？", a: "<b>✓ 主要说明：</b> 无需勉强站立。您可以保持坐在轮椅上的状态接受安全检查。<br><br><b>✓ 具体方法：</b> 工作人员会使用手持式探测器及人工触检方式进行检查。为了确保安全，轮椅本身也需要另外接受检查。" },
+      { q: "8. 孕妇也需要与普通旅客一样接受身体检查吗？", a: "<b>✓ 主要说明：</b> 一般使用的金属探测设备不使用X光，而是通过电磁场探测金属物品，并按照正常的安全检查程序使用。<br><br><b>✓ 具体方法：</b> 如果您正在怀孕，或对通过安检设备有所顾虑，请提前告知安保人员。工作人员会为您说明可以采取的其他检查方式。" },
+      { q: "9. 为什么安全检查时有时需要打开行李检查？", a: "<b>✓ 主要说明：</b> 如果仅通过X光图像难以辨认物品，或怀疑行李中存在禁止带入客舱的物品，工作人员可能会进行开包检查。<br><br><b>✓ 注意事项：</b> 行李内物品相互重叠时，即使实际没有问题，也可能导致X光图像难以准确判断。这是为了保障所有旅客安全而进行的必要程序，敬请理解并配合。" },
+      { q: "10. 安检时不能携带的物品，如果选择放弃，会如何处理？", a: "<b>✓ 主要说明：</b> 旅客在现场自愿放弃所有权的物品，可能会捐赠给社会福利机构或进行废弃处理。<br><br><b>✓ 具体方法：</b> 如果是您珍惜或重要的物品，可以离开安检区域后重新办理托运，或者使用快递、寄存等服务。相关服务因机场不同可能有所差异。" }
     ]}
   },
   ja: {
-    general: { title: "✈️ 基本利用案内", items: [
-      { q: "1. なぜ本人確認と保安検査を受けなければならないのですか？", a: "<b>✓ 主なご案内：</b> 航空機テロなどの危険状況を予防し、乗客の安全を守るため、「航空保安法」に基づいて実施される必須の法的手続きです。<br><br><b>✓ ご注意：</b> 皆様の安全のための必須過程ですので、多少お手数をおかけいたしますが、寛大なご理解とご協力をお願いいたします。" },
-      { q: "2. 本人確認および保安検査を拒否したり協力しなかったりした場合はどうなりますか？", a: "<b>✓ 主なご案内：</b> 検査を拒否した場合、規定により航空機への搭乗をお断りすることがあります。<br><br><b>✓ ご注意：</b> 航空保安要員に対して暴言や無理な行動をとった場合、関連法に基づき不利益を被る可能性がありますので、ご配慮をお願いいたします。" },
-      { q: "3. 本人確認と保安検査はどのような順序と手順で行われますか？", a: "<b>✓ 主なご案内：</b> ① 本人確認 ➔ ② 手荷物検査 ➔ ③ 旅客検査 の順で進行します。<br><br><b>✓ 詳細手順：</b><br>第1段階（本人確認）：入口で搭乗券と身分証明書を提示<br>第2段階（手荷物検査）：所持品、上着、カバンをトレーに入れ、X線検査機を通過<br>第3段階（旅客検査）：金属探知機を通過（※必要に応じて要員による軽い接触検査を追加）" },
-      { q: "4. 保安検査および本人確認時に優先レーンを利用できる対象者は誰ですか？", a: "<b>✓ 主なご案内：</b> 障がい者、満80歳以上のご高齢者、妊婦、満24ヶ月未満の乳幼児をお連れのお客様、独立有功者などが対象です。<br><br><b>✓ 詳細手順：</b> 満24ヶ月未満の乳幼児をお連れの場合は最大6名まで、その他の場合は最大3名までご一緒にご利用いただけます。優待対象者であることをお申し出いただければご案内いたします。" },
-      { q: "5. 保安検査場や本人確認エリア内で写真および動画の撮影は可能ですか？", a: "<b>✓ 主なご案内：</b> 絶対に不可です。（国家保安施設に指定されています）<br><br><b>✓ ご注意：</b> 保安機器や運営の様子が露出しないよう、記念撮影は保安検査をすべて終えた後、搭乗エリアで行ってください。" }
+    general: { title: "✈️ 一般事項", items: [
+      { q: "1. 本人確認および保安検査はなぜ必要ですか？", a: "<b>✓ 主なご案内：</b> 航空機テロなどの危険を未然に防ぎ、すべてのお客様の安全を守るため、「航空保安法」に基づいて実施される法令上必要な手続きです。<br><br><b>✓ ご注意：</b> 皆様の安全を守るために必要な手続きです。ご不便をおかけする場合もございますが、ご理解とご協力をお願いいたします。" },
+      { q: "2. 本人確認や保安検査を拒否したり、検査に協力しなかった場合はどうなりますか？", a: "<b>✓ 主なご案内：</b> 保安検査を拒否された場合、規定により航空機への搭乗をお断りすることがあります。<br><br><b>✓ ご注意：</b> 航空保安係員に対する暴言、威嚇、不適切な行為などを行った場合、関係法令により処罰等の対象となることがあります。ご理解とご協力をお願いいたします。" },
+      { q: "3. 本人確認と保安検査はどのような順番で行われますか？", a: "<b>✓ 主なご案内：</b><br>① 本人確認 ➔ ② 手荷物検査 ➔ ③ お客様の身体検査<br>の順に行われます。<br><br><b>✓ 詳細：</b><br>• ステップ1－本人確認： 入口で搭乗券と本人確認書類をご提示ください。<br>• ステップ2－手荷物検査： 所持品、上着、バッグなどをトレーに入れ、X線検査装置に通してください。<br>• ステップ3－身体検査： 金属探知機を通過してください。必要に応じて、係員による簡単な接触検査（ボディチェック）を行う場合があります。" },
+      { q: "4. 本人確認・保安検査の優先レーンを利用できるのはどのような方ですか？", a: "<b>✓ 主なご案内：</b> 障がいのある方、80歳以上の高齢者、妊娠中の方、24か月未満の乳幼児を同伴する方、韓国の独立有功者などが対象です。<br><br><b>✓ 詳細：</b> 24か月未満の乳幼児を同伴される場合は最大6名まで、その他の対象者の場合は最大3名まで一緒にご利用いただけます。優先対象であることを係員にお申し出いただければ、ご案内いたします。" },
+      { q: "5. 保安検査エリアや本人確認エリアで写真・動画を撮影できますか？", a: "<b>✓ 主なご案内：</b> できません。撮影は一切禁止されています。（国家保安施設に指定されています）<br><br><b>✓ ご注意：</b> 保安検査設備や運用状況が映り込まないよう、記念撮影は保安検査をすべて終え、搭乗エリアに入ってからお願いいたします。" }
     ]},
-    id: { title: "🪪 本人確認案内", items: [
-      { q: "1. 有効な身分証明書の種類は何ですか？", a: "<b>✓ 主なご案内：</b> 国家機関で発行された身分証（写真貼付必須）である必要があります。<br>- 成人：住民登録証、運転免許証、パスポートなど<br>- 未成年者：学生証、青少年証、在学証明書など（満19歳未満のみ対象）<br>* 写真が貼付されていない場合、追加の保安質問が行われることがあります。" },
-      { q: "2. モバイル身分証（PASS、政府24アプリなど）での搭乗は可能ですか？", a: "<b>✓ 主なご案内：</b> はい、モバイル身分証でも搭乗が可能です。<br><br><b>✓ ご注意：</b> キャプチャ画面や録画データは絶対に不可です。現場で直接アプリを起動して提示していただく必要があります。" },
-      { q: "3. 搭乗券と身分証明書の名前（英語含む）が異なる場合はどうすればよいですか？", a: "<b>✓ 主なご案内：</b> 原則として身分証と搭乗券の名前は一致しなければなりません。誤字がある場合、証明書類の確認後、正しい搭乗券を再発行していただかなければ搭乗できません。<br><br><b>✓ 詳細手順：</b> 本人確認に進む前に、ご利用の航空会社のカウンターを先にお尋ねください。" },
-      { q: "4. 幼児および乳児の搭乗時に家族関係証明書や住民登録謄本は必ず必要ですか？", a: "<b>✓ 主なご案内：</b> はい、乳幼児も住民登録謄本、家族関係証明書、健康保険証のうち1つが必ず必要です。<br><br><b>✓ 詳細手順：</b> 書類をお忘れの場合は、空港内または近隣にある無人民願発券機を利用して発行することができます。" },
-      { q: "5. 生体情報（静脈、指紋）の事前登録方法と利用対象者は誰ですか？", a: "<b>✓ 主なご案内：</b> 満7歳以上で住民登録がされている大韓民国国民であれば、誰でも登録後、身分証なしで生体認証を利用できます。<br><br><b>✓ 詳細手順：</b> 空港内の生体情報セルフ登録機（14歳以上から可能）または有人登録デスク（職員がいる場合）で手のひら静脈を登録してください。" },
-      { q: "6. 生体情報を登録する際、身分証明書は必ず必要ですか？", a: "<b>✓ 主なご案内：</b> はい、生体情報の登録後、初回利用時に身分証の確認が必要です。<br><br><b>✓ ご注意：</b> 身分証のコピーでは初回登録および確認ができませんので、必ず有効な実物の身分証をご持参ください。" },
-      { q: "7. 仁川空港でスマートパスを登録しましたが、再登録が必要ですか？", a: "<b>✓ 主なご案内：</b> はい、再度ご登録いただく必要があります。仁川空港（顔認証）とその他の14空港（手のひら静脈）は互いに異なるシステムです。<br>* 14空港：金浦、金海、済州、清州、大邱、務安、襄陽、光州、蔚山、麗水、浦項慶州、泗川、群山、原州<br><br><b>✓ 詳細手順：</b> ご利用の路線に合わせて、国内線または国際線に設置された無人登録機で手のひら静脈を新たに登録してください。" },
-      { q: "8. 本人確認の過程で顔を確認する理由は何ですか？", a: "<b>✓ 主なご案内：</b> 搭乗客ご本人であることを正確に確認し、他人の身分証の盗用および無断搭乗を防止するためです。<br><br><b>✓ ご注意：</b> 航空保安のための必須手続きであり、必要に応じて簡単な保安質問が同時に行われることがありますので、積極的なご協力をお願いいたします。" },
-      { q: "9. 本人確認時、マスクやサングラス、帽子は必ず外さなければなりませんか？", a: "<b>✓ 主なご案内：</b> 正確な本人確認のため、一時的に外していただく必要があります。<br><br><b>✓ 詳細手順：</b> 顔がよく見えるようにマスクを下げるか帽子を外し、職員に提示した後、再度着用していただきます。" },
-      { q: "10. 飛行機の出発時間が迫っている場合、先に入場することはできますか？", a: "<b>✓ 主なご案内：</b> 現場の待機順を任意に変更して先に入場することはできません。<br><br><b>✓ 詳細手順：</b> 搭乗時間が迫っている状況であれば、直ちにご利用の航空会社の職員に状況を伝え、支援を要請してください。" }
+    id: { title: "🪪 本人確認", items: [
+      { q: "1. 本人確認に使用できる有効な身分証明書は何ですか？", a: "<b>✓ 主なご案内：</b> 本人確認には、有効なパスポートのみご使用いただけます。" },
+      { q: "2. 携帯電話で撮影したパスポートの写真やコピーを使用できますか？", a: "<b>✓ 主なご案内：</b> 使用できません。本人確認の際は、必ず有効なパスポートの原本をご提示ください。<br><br><b>✓ ご注意：</b> パスポートの写真、コピー、スキャンデータ、携帯電話に保存した画像などは、本人確認用のパスポートとして認められません。" },
+      { q: "3. 搭乗券を携帯電話で提示してもよいですか？", a: "<b>✓ 主なご案内：</b> はい。航空会社が発行したモバイル搭乗券をご利用いただけます。保安検査および搭乗の際に、携帯電話の画面に表示したモバイル搭乗券を係員にご提示ください。<br><br><b>✓ 詳細：</b> QRコードまたはバーコードがはっきり見える状態で画面をご準備ください。航空会社や空港の運用状況により、追加の確認手続きが行われる場合があります。" },
+      { q: "4. モバイル搭乗券を表示できない、または携帯電話のバッテリーが切れている場合はどうすればよいですか？", a: "<b>✓ 主なご案内：</b> モバイル搭乗券を提示できない場合は、ご利用の航空会社の係員にお申し出ください。<br><br><b>✓ 詳細：</b> 必要に応じて、航空会社カウンターなどで搭乗券を再発行することができます。" },
+      { q: "5. 搭乗券とパスポートの氏名（ローマ字表記を含む）が異なる場合はどうすればよいですか？", a: "<b>✓ 主なご案内：</b> 原則として、パスポートと搭乗券の氏名およびローマ字表記は一致している必要があります。誤字などがある場合は、正しい内容の搭乗券を再発行してから搭乗してください。" },
+      { q: "6. パスポートの有効期限が切れている、または残存有効期間が短い場合でも搭乗できますか？", a: "<b>✓ 主なご案内：</b> 有効期限が切れたパスポートは使用できません。また、有効期限内であっても、渡航先の国が定めるパスポートの残存有効期間を満たしていない場合は、搭乗が制限されることがあります。出発前に渡航先の入国要件および航空会社の案内を必ずご確認ください。" },
+      { q: "7. 他人の搭乗券を提示したり、他人に代わって搭乗券を提示したりできますか？", a: "<b>✓ 主なご案内：</b> できません。実際に搭乗されるお客様ご本人の搭乗券をご提示ください。<br><br><b>✓ ご注意：</b> 本人確認の際は、パスポートと搭乗券をあわせて確認し、ご本人であることを確認します。" },
+      { q: "8. 本人確認の際に顔を確認するのはなぜですか？", a: "<b>✓ 主なご案内：</b> 搭乗者ご本人であることを正確に確認し、他人の身分証明書の不正使用や不正搭乗を防止するためです。<br><br><b>✓ ご注意：</b> 航空保安上必要な手続きです。必要に応じて簡単な保安上の質問を行う場合がありますので、ご協力をお願いいたします。" },
+      { q: "9. 本人確認の際、マスク、サングラス、帽子は必ず外さなければなりませんか？", a: "<b>✓ 主なご案内：</b> 正確な本人確認のため、一時的に外していただく必要があります。<br><br><b>✓ 詳細：</b> 顔がよく見えるよう、マスクを下げる、サングラスや帽子を外すなどして係員にお見せください。確認後はすぐに再度着用していただけます。" },
+      { q: "10. 飛行機の出発時刻が迫っている場合、先に入ることはできますか？", a: "<b>✓ 主なご案内：</b> お客様の判断で待機列の順番を変更し、先に入場することはできません。<br><br><b>✓ 詳細：</b> 搭乗時刻が迫っている場合は、すぐにご利用の航空会社の係員に状況をお伝えいただき、対応についてご相談ください。" }
     ]},
-    security: { title: "🧳 保安検査案内", items: [
-      { q: "1. ノートパソコン、タブレットPCなどの電子機器はなぜカバンから出さなければならないのですか？", a: "<b>✓ 主なご案内：</b> 回路が複雑な電子機器が重なっていると、正確なX線判読が不可能となるため、カバンから出していただく必要があります。<br><br><b>✓ 詳細手順：</b> 検査場前のトレーにカバンと電子機器をそれぞれ別に入れていただければ、迅速かつ正確に保安検査を終えることができます。" },
-      { q: "2. モバイルバッテリーや電子タバコは受託手荷物（預け入れ荷物）に入れてもよいですか？", a: "<b>✓ 主なご案内：</b> 不可です。モバイルバッテリー、電子タバコ、ライターは火災の危険があるため、受託手荷物として預けることはできません。<br><br><b>✓ ご注意：</b> 必ずお客様ご自身で機内に持ち込んでご搭乗いただく必要があります。" },
-      { q: "3. 液体物の機内持ち込み規定（100ml）はどうなっていますか？", a: "<b>✓ 主なご案内：</b><br>- 国際線：100ml以下の個別容器に入れ、1人当たり1Lの透明なプラスチック製ジッパーバッグ1つに入れる場合のみ持ち込み可能です。<br>- 国内線：液体物の持ち込み制限はありません。（生活用品である水、飲料水、化粧品などの持ち込み可能）<br><br><b>✓ ご注意：</b> 化学製品など危険物の持ち込み可否が不確実な場合、MSDS（化学物質安全性データシート）等を通じて物質の成分を確認した後、航空会社に持ち込み可否をお問い合わせください。" },
-      { q: "4. 職員が手で検査（接触検査）するのはどのような場合ですか？", a: "<b>✓ 主なご案内：</b> 機器通過後に追加確認が必要な場合に接触検査を実施することがあり、航空保安規定に従い航空保安等級別の無作為の接触検査も実施しています。<br><br><b>✓ 詳細手順：</b> 同性の保安検査要員が手で触れて確認する規定ですので、慌てずに案内に従ってください。" },
-      { q: "5. 体に医療用金属（人工関節など）がある場合はどのように進行しますか？", a: "<b>✓ 主なご案内：</b> 保安検査要員に医療用金属があることを事前にお伝えください。<br><br><b>✓ 詳細手順：</b> 機器の警報が鳴っても、保安検査要員が携帯用探知機と手の検査（接触検査）で安全に確認いたします。" },
-      { q: "6. 個人的な事情により、別のスペースで検査を受けることはできますか？", a: "<b>✓ 主なご案内：</b> はい、可能です！宗教的・身体的理由やプライバシー保護のためにリクエストすることができます。<br><br><b>✓ 詳細手順：</b> 保安検査要員に「個別検査」をご要請いただければ、別途設けられたスペースでリラックスして受けていただけます。" },
-      { q: "7. 車いす利用など移動が困難な場合、どのように検査を受けますか？", a: "<b>✓ 主なご案内：</b> 無理に立ち上がる必要はなく、車いすに乗った状態のまま検査を受けることができます。<br><br><b>✓ 詳細手順：</b> 職員が携帯用探知機と手の検査で確認し、安全のために車いすも別途検査します。" },
-      { q: "8. 妊婦も一般の乗客と同様に身体検査を受けますか？", a: "<b>✓ 主なご案内：</b> 検査機器は人体に無害であり、妊婦と胎児にとって安全です。<br><br><b>✓ 詳細手順：</b> 機器の通過が心配な場合は、要員に事前に要請して手の検査（接触検査）に代替することができます。" },
-      { q: "9. 保安検査中にカバンを開けて確認されることはありますか？", a: "<b>✓ 主なご案内：</b> X線画面だけでは物品の識別が難しい場合、または機内持ち込み禁止物品が疑われる場合に開披検査を行います。<br><br><b>✓ ご注意：</b> 荷物が重なっていると画面上で誤解が生じ、実際には問題がない場合も多々あります。皆様の安全のための手続きですので、寛大なご理解をお願いいたします。" },
-      { q: "10. 保安検査中に持ち込めない物品を放棄した場合、どのように処理されますか？", a: "<b>✓ 主なご案内：</b> 現場で所有権を放棄された物品は、社会福祉施設に寄贈されるか廃棄処理されます。<br><br><b>✓ 詳細手順：</b> 大切な物品である場合は、外に出て受託手荷物として預け直すか、宅配・保管サービス（空港によって異なります）をご利用ください。" }
+    security: { title: "🧳 保安検査", items: [
+      { q: "1. ノートパソコンやタブレットなどの電子機器をバッグから取り出す必要があるのはなぜですか？", a: "<b>✓ 主なご案内：</b> 複雑な回路を持つ電子機器がバッグの中で他の物品と重なっていると、X線画像を正確に判別することが難しくなるため、バッグから取り出していただく場合があります。<br><br><b>✓ 詳細：</b> 保安検査場では、バッグと電子機器をそれぞれ別のトレーに入れてください。より迅速かつ正確に保安検査を行うことができます。" },
+      { q: "2. モバイルバッテリーや電子タバコを受託手荷物に入れることはできますか？", a: "<b>✓ 主なご案内：</b> できません。モバイルバッテリー、電子タバコ、ライターは火災の危険があるため、受託手荷物として預けることはできません。<br><br><b>✓ ご注意：</b> 必ずお客様ご自身で機内に持ち込んでください。" },
+      { q: "3. 機内持ち込み液体物の「100mlルール」とは何ですか？", a: "<b>✓ 主なご案内：</b><br>• 国際線： 液体物は1容器あたり100ml以下の容器に入れ、1人につき1つの容量1L以下の透明な再封可能なプラスチック袋にまとめて入れてください。<br>• 国内線： 水、飲料、化粧品などの日用品としての一般的な液体物については、原則として容量制限はありません。<br><br><b>✓ ご注意：</b> 化学製品など、危険物に該当するかどうか不明な場合は、MSDS（安全データシート）などで成分をご確認のうえ、機内への持ち込みが可能か航空会社にお問い合わせください。" },
+      { q: "4. 係員による接触検査（ボディチェック）はどのような場合に行われますか？", a: "<b>✓ 主なご案内：</b> 検査機器を通過した後、追加確認が必要な場合に接触検査を行うことがあります。また、航空保安レベルに応じて無作為の接触検査を実施する場合もあります。<br><br><b>✓ 詳細：</b> お客様と同性の保安検査員が手で身体の外側を確認します。驚かず、係員の案内に従ってご協力ください。" },
+      { q: "5. 人工関節など、体内に医療用の金属が入っている場合はどうなりますか？", a: "<b>✓ 主なご案内：</b> 医療用金属が入っていることを、あらかじめ保安検査員にお申し出ください。<br><br><b>✓ 詳細：</b> 検査機器で警報が鳴った場合でも、係員が携帯型金属探知機や接触検査を使用して安全に確認します。" },
+      { q: "6. 個人的な事情により、別の場所で保安検査を受けることはできますか？", a: "<b>✓ 主なご案内：</b> はい、可能です。宗教上または身体上の理由、プライバシー保護などの理由で、個別の保安検査をお申し出いただけます。<br><br><b>✓ 詳細：</b> 保安検査員に「個別検査を希望する」とお申し出ください。別途設けられたスペースで検査を行います。" },
+      { q: "7. 車いすを利用しているなど、移動が困難な場合はどのように検査を受けますか？", a: "<b>✓ 主なご案内：</b> 無理に立ち上がる必要はありません。車いすに座ったまま保安検査を受けることができます。<br><br><b>✓ 詳細：</b> 係員が携帯型金属探知機と接触検査により確認します。また、安全確認のため、車いす自体も別途検査します。" },
+      { q: "8. 妊娠中でも一般のお客様と同じ身体検査を受けますか？", a: "<b>✓ 主なご案内：</b> 一般的な金属探知装置はX線を使用せず、電磁界を利用して金属物を検知する装置で、通常の保安検査手続きに使用されています。<br><br><b>✓ 詳細：</b> 妊娠中の方や検査機器の通過に不安がある方は、あらかじめ保安検査員にお申し出ください。利用可能な別の検査方法についてご案内します。" },
+      { q: "9. 保安検査中にバッグを開けて確認することがあるのはなぜですか？", a: "<b>✓ 主なご案内：</b> X線画像だけでは物品を識別しにくい場合や、機内持ち込み禁止物品が入っている可能性がある場合に、バッグを開けて確認することがあります。<br><br><b>✓ ご注意：</b> バッグの中で物品が重なっていると、実際には問題がなくてもX線画像では判別しにくくなることがあります。皆様の安全を守るための手続きですので、ご理解とご協力をお願いいたします。" },
+      { q: "10. 保安検査で持ち込めない物品を放棄した場合、その物品はどうなりますか？", a: "<b>✓ 主なご案内：</b> 保安検査場で所有権を放棄された物品は、社会福祉施設への寄付または廃棄処分となる場合があります。<br><br><b>✓ 詳細：</b> 大切な物品の場合は、一度保安検査エリアの外に出て受託手荷物として預け直すか、宅配・一時保管サービスなどをご利用ください。利用可能なサービスは空港によって異なります。" }
     ]}
   }
 };
