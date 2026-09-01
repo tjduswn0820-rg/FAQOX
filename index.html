@@ -20,14 +20,6 @@ body {
 }
 button, input { font-family: inherit; }
 
-/* 모바일 터치 최적화 (더 빠른 반응, 텍스트 드래그 방지) */
-button, .faq-category-btn, .consent-option, summary, .back-btn, .lang-btn, .airport-button, .ox-button {
-  touch-action: manipulation;
-  -webkit-user-select: none;
-  user-select: none;
-  cursor: pointer;
-}
-
 .app { width: 100%; min-height: 100vh; min-height: 100dvh; }
 .screen {
   width: 100%; min-height: 100vh; min-height: 100dvh;
@@ -36,28 +28,13 @@ button, .faq-category-btn, .consent-option, summary, .back-btn, .lang-btn, .airp
 }
 
 /* =====================================================
-   START SCREEN (배경 장식물 터치 방해 금지 추가)
-===================================================== */
-.start-screen { position: relative; overflow: hidden; }
-.start-screen::before {
-  content: ""; position: absolute; width: 260px; height: 260px; border-radius: 50%;
-  background: rgba(39,119,196,.07); top: -100px; right: -80px;
-  pointer-events: none; /* 터치 방해 금지 */
-}
-.start-screen::after {
-  content: ""; position: absolute; width: 190px; height: 190px; border-radius: 50%;
-  background: rgba(39,119,196,.05); bottom: 80px; left: -100px;
-  pointer-events: none; /* 터치 방해 금지 */
-}
-
-/* =====================================================
    FAQ SCREEN (첫 화면)
 ===================================================== */
 .faq-screen { justify-content: flex-start; }
-.header-lang { display: flex; justify-content: flex-end; gap: 8px; margin-bottom: 15px; position: relative; z-index: 10; }
+.header-lang { display: flex; justify-content: flex-end; gap: 8px; margin-bottom: 15px; }
 .lang-btn {
   background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 6px 12px;
-  font-size: 14px; font-weight: 700; color: #64748b; transition: all 0.2s ease;
+  font-size: 14px; font-weight: 700; color: #64748b; cursor: pointer; transition: all 0.2s ease;
 }
 .lang-btn.active { background: #005bea; color: white; border-color: #005bea; box-shadow: 0 4px 10px rgba(0, 91, 234, 0.2); }
 
@@ -65,19 +42,19 @@ button, .faq-category-btn, .consent-option, summary, .back-btn, .lang-btn, .airp
 .lang-warning {
   background: #fffbeb; border: 1px solid #fde047; border-radius: 16px; padding: 16px;
   margin-bottom: 20px; text-align: center; color: #b45309; font-size: 14px; font-weight: 800;
-  line-height: 1.5; animation: fadeIn 0.3s ease; position: relative; z-index: 10;
+  line-height: 1.5; animation: fadeIn 0.3s ease;
 }
 
-.faq-header { text-align: center; margin-bottom: 30px; position: relative; z-index: 10; }
+.faq-header { text-align: center; margin-bottom: 30px; }
 .faq-title { font-size: 34px; font-weight: 900; color: #121829; margin: 0 0 10px; letter-spacing: -1px; }
 .faq-subtitle { font-size: 16px; font-weight: 800; color: #005bea; margin: 0 0 5px; }
 .faq-desc { font-size: 15px; color: #5c6b7f; margin: 0; font-weight: 600; word-break: keep-all; }
 
 /* 카테고리 뷰 */
-.faq-categories { display: flex; flex-direction: column; gap: 16px; margin-bottom: 30px; position: relative; z-index: 10; }
+.faq-categories { display: flex; flex-direction: column; gap: 16px; margin-bottom: 30px; }
 .faq-category-btn {
   background: white; border-radius: 20px; padding: 20px; display: flex; align-items: center; gap: 16px;
-  font-size: 20px; font-weight: 800; color: #1e293b; box-shadow: 0 12px 30px rgba(20, 30, 50, 0.04);
+  font-size: 20px; font-weight: 800; color: #1e293b; box-shadow: 0 12px 30px rgba(20, 30, 50, 0.04); cursor: pointer;
 }
 .faq-category-btn:active { transform: scale(0.97); }
 .faq-category-btn .icon { font-size: 28px; background: #f1f5f9; width: 54px; height: 54px; display: flex; align-items: center; justify-content: center; border-radius: 16px; }
@@ -86,14 +63,13 @@ button, .faq-category-btn, .consent-option, summary, .back-btn, .lang-btn, .airp
 .quiz-banner {
   margin-top: auto; background: linear-gradient(135deg, #f0f7ff 0%, #e0f2fe 100%);
   border: 1px solid #bae6fd; border-radius: 24px; padding: 24px; text-align: center; box-shadow: 0 10px 25px rgba(2, 132, 199, 0.1);
-  position: relative; z-index: 10;
 }
 .quiz-banner-text { font-size: 15px; line-height: 1.6; font-weight: 700; color: #0f172a; margin: 0 0 16px; word-break: keep-all; }
 .quiz-banner-text .highlight { color: #0284c7; }
 .start-quiz-btn {
   width: 100%; padding: 16px; border: none; border-radius: 16px;
   background: linear-gradient(135deg, #005bea 0%, #0084ff 100%); color: white; font-size: 18px; font-weight: 800;
-  box-shadow: 0 8px 20px rgba(0, 91, 234, 0.25); animation: pulse 2s infinite;
+  box-shadow: 0 8px 20px rgba(0, 91, 234, 0.25); cursor: pointer; animation: pulse 2s infinite;
 }
 @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
 
@@ -103,13 +79,13 @@ button, .faq-category-btn, .consent-option, summary, .back-btn, .lang-btn, .airp
 .faq-list-view {
   background: white; border-radius: 24px; padding: 24px 20px;
   box-shadow: 0 10px 30px rgba(20, 30, 50, 0.05); margin-bottom: 20px;
-  animation: fadeIn 0.3s ease; position: relative; z-index: 10;
+  animation: fadeIn 0.3s ease;
 }
 .faq-list-title { font-size: 22px; font-weight: 900; color: #0f172a; margin: 0 0 20px 0; text-align: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; }
 
 .faq-list { display: flex; flex-direction: column; gap: 12px; }
 .faq-item { background: #f8fafc; border-radius: 16px; overflow: hidden; border: 1px solid #e2e8f0; }
-.faq-item summary { padding: 16px; font-size: 15px; font-weight: 800; color: #1e293b; position: relative; padding-right: 40px; line-height: 1.4; outline: none; }
+.faq-item summary { padding: 16px; font-size: 15px; font-weight: 800; color: #1e293b; cursor: pointer; list-style: none; position: relative; padding-right: 40px; line-height: 1.4; outline: none; }
 .faq-item summary::-webkit-details-marker { display: none; }
 .faq-item summary::after { content: "▼"; position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: #005bea; font-size: 14px; }
 .faq-item[open] summary::after { content: "▲"; }
@@ -119,7 +95,7 @@ button, .faq-category-btn, .consent-option, summary, .back-btn, .lang-btn, .airp
 
 .back-btn {
   width: 100%; padding: 16px; border: none; border-radius: 16px; margin-top: 20px;
-  background: #e2e8f0; color: #475569; font-size: 18px; font-weight: 800; transition: background 0.2s;
+  background: #e2e8f0; color: #475569; font-size: 18px; font-weight: 800; cursor: pointer; transition: background 0.2s;
 }
 .back-btn:active { background: #cbd5e1; }
 
@@ -129,10 +105,10 @@ button, .faq-category-btn, .consent-option, summary, .back-btn, .lang-btn, .airp
 .main-button {
   width: 100%; min-height: 70px; border: none; border-radius: 35px;
   background: linear-gradient(135deg, #005bea 0%, #0084ff 100%); color: #ffffff; font-size: 20px; font-weight: 800;
-  box-shadow: 0 14px 30px rgba(0, 91, 234, 0.3); transition: all 0.2s ease; letter-spacing: -0.5px;
+  box-shadow: 0 14px 30px rgba(0, 91, 234, 0.3); cursor: pointer; transition: all 0.2s ease; letter-spacing: -0.5px;
 }
 .main-button:active { transform: scale(0.97); box-shadow: 0 8px 20px rgba(0, 91, 234, 0.2); }
-.main-button:disabled { background: #cbd5e1; box-shadow: none; color: #f1f5f9; cursor: default; pointer-events: none; }
+.main-button:disabled { background: #cbd5e1; box-shadow: none; color: #f1f5f9; cursor: default; }
 .main-button.secondary { background: #e2e8f0; color: #475569; box-shadow: none; }
 .main-button.secondary:active { background: #cbd5e1; }
 .hidden { display: none !important; }
@@ -140,12 +116,12 @@ button, .faq-category-btn, .consent-option, summary, .back-btn, .lang-btn, .airp
 /* =====================================================
    AIRPORT SCREEN (공항 선택)
 ===================================================== */
-.airport-section { background: white; padding: 30px 20px; border-radius: 32px; box-shadow: 0 20px 50px rgba(20, 30, 50, 0.05); margin-top: auto; margin-bottom: auto; position: relative; z-index: 10; }
+.airport-section { background: white; padding: 30px 20px; border-radius: 32px; box-shadow: 0 20px 50px rgba(20, 30, 50, 0.05); margin-top: auto; margin-bottom: auto; }
 .section-heading { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 24px; }
 .section-title { margin: 0; font-size: 20px; font-weight: 800; color: #1a2233; }
 .section-sub { font-size: 13px; color: white; font-weight: 700; background: #ff4757; padding: 4px 10px; border-radius: 20px; }
 .airport-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-.airport-button { min-height: 60px; border: 1px solid #e2e8f0; border-radius: 16px; background: #f8fafc; color: #475569; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s; }
+.airport-button { min-height: 60px; border: 1px solid #e2e8f0; border-radius: 16px; background: #f8fafc; color: #475569; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: all 0.2s; }
 .airport-button:active { transform: scale(0.95); }
 .airport-button.selected { background: #005bea; border-color: #005bea; color: white; box-shadow: 0 10px 20px rgba(0, 91, 234, 0.25); }
 
@@ -153,7 +129,7 @@ button, .faq-category-btn, .consent-option, summary, .back-btn, .lang-btn, .airp
    QUIZ SCREEN 
 ===================================================== */
 .quiz-screen { justify-content: center; }
-.quiz-top { width: 100%; max-width: 760px; margin: 0 auto 30px auto; position: relative; z-index: 10; }
+.quiz-top { width: 100%; max-width: 760px; margin: 0 auto 30px auto; }
 .quiz-info { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; }
 .quiz-number { font-size: 16px; font-weight: 800; color: #005bea; background: rgba(0, 91, 234, 0.1); padding: 6px 14px; border-radius: 20px; }
 .progress { width: 100%; height: 6px; border-radius: 6px; background: #e2e8f0; overflow: hidden; }
@@ -162,17 +138,15 @@ button, .faq-category-btn, .consent-option, summary, .back-btn, .lang-btn, .airp
 .question-area {
   width: 100%; max-width: 760px; margin: 0 auto 20px auto;
   background: white; padding: 30px 15px; border-radius: 32px;
-  box-shadow: 0 20px 50px rgba(20, 30, 50, 0.05);
-  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; box-sizing: border-box;
-  position: relative; z-index: 10;
+  box-shadow: 0 20px 50px rgba(20, 30, 50, 0.05); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; box-sizing: border-box;
 }
 #questionContent { width: 100%; text-align: center; }
 .question-guide { display: inline-block; padding: 8px 16px; margin-bottom: 20px; border-radius: 12px; background: #f1f5f9; color: #64748b; font-size: 14px; font-weight: 700; letter-spacing: -0.3px; }
 .question { margin: 0; font-size: 22px; line-height: 1.45; font-weight: 800; color: #0f172a; width: 100%; word-break: keep-all; overflow-wrap: break-word; }
 
-.ox-area { width: 100%; max-width: 760px; margin: 0 auto; position: relative; z-index: 10; }
+.ox-area { width: 100%; max-width: 760px; margin: 0 auto; }
 .ox-buttons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-.ox-button { width: 100%; height: 130px; border: 2px solid transparent; border-radius: 32px; background: white; color: #1e293b; font-size: 60px; font-weight: 900; box-shadow: 0 10px 30px rgba(20, 30, 50, 0.04); transition: all 0.2s; }
+.ox-button { width: 100%; height: 130px; border: 2px solid transparent; border-radius: 32px; background: white; color: #1e293b; font-size: 60px; font-weight: 900; box-shadow: 0 10px 30px rgba(20, 30, 50, 0.04); cursor: pointer; transition: all 0.2s; }
 .ox-button:active { transform: scale(0.93); }
 .ox-button.selected { background: linear-gradient(135deg, #005bea 0%, #0084ff 100%); color: white; box-shadow: 0 16px 32px rgba(0, 91, 234, 0.25); border: none; animation: answerPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 @keyframes answerPop { 0% { transform: scale(0.9); } 100% { transform: scale(1); } }
@@ -183,13 +157,13 @@ button, .faq-category-btn, .consent-option, summary, .back-btn, .lang-btn, .airp
 .explanation-title { margin: 0 0 10px; font-size: 18px; font-weight: 800; color: #005bea; display: flex; align-items: center; gap: 6px; }
 .explanation-box.incorrect .explanation-title { color: #e11d48; }
 .explanation-text { margin: 0; font-size: 17px; line-height: 1.6; font-weight: 600; color: #334155; word-break: keep-all; }
-.next-button { width: 100%; height: 70px; margin-top: 16px; border: none; border-radius: 35px; background: #0f172a; color: white; font-size: 20px; font-weight: 800; animation: buttonUp 0.3s ease; letter-spacing: -0.5px; }
+.next-button { width: 100%; height: 70px; margin-top: 16px; border: none; border-radius: 35px; background: #0f172a; color: white; font-size: 20px; font-weight: 800; cursor: pointer; animation: buttonUp 0.3s ease; letter-spacing: -0.5px; }
 @keyframes buttonUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
 /* =====================================================
    RESULT & CONSENT & COMPLETE
 ===================================================== */
-.result-screen, .complete-screen { justify-content: center; align-items: center; text-align: center; position: relative; z-index: 10; }
+.result-screen, .complete-screen { justify-content: center; align-items: center; text-align: center; }
 .result-icon, .complete-icon { width: 100px; height: 100px; margin: 0 auto 24px; border-radius: 30px; background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%); display: flex; align-items: center; justify-content: center; font-size: 50px; box-shadow: 0 14px 30px rgba(2, 132, 199, 0.15); animation: resultPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 .complete-icon { background: linear-gradient(135deg, #fef08a 0%, #fde047 100%); box-shadow: 0 15px 35px rgba(253, 224, 71, 0.3); }
 @keyframes resultPop { 0% { opacity: 0; transform: scale(.65); } 70% { transform: scale(1.08); } 100% { transform: scale(1); } }
@@ -198,12 +172,12 @@ button, .faq-category-btn, .consent-option, summary, .back-btn, .lang-btn, .airp
 .score-unit { margin-top: 12px; color: #64748b; font-size: 16px; font-weight: 700; }
 .result-message { margin: 24px 0 0; color: #334155; font-size: 18px; line-height: 1.6; font-weight: 600; white-space: pre-line;}
 
-.consent-screen { justify-content: flex-start; overflow-y: auto; position: relative; z-index: 10; }
+.consent-screen { justify-content: flex-start; overflow-y: auto; }
 .consent-header { padding-top: 20px; margin-bottom: 30px; text-align: left; }
 .consent-icon { width: 56px; height: 56px; border-radius: 18px; background: linear-gradient(135deg, #fef08a 0%, #fde047 100%); display: flex; align-items: center; justify-content: center; font-size: 30px; margin-bottom: 20px; box-shadow: 0 10px 20px rgba(253, 224, 71, 0.3); }
 .info-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 30px; }
 .info-box { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 12px rgba(38,70,96,.04); border: 1px solid #dce7ef; }
-.info-summary { padding: 20px; font-size: 15px; font-weight: 800; color: #1e293b; position: relative; outline: none; }
+.info-summary { padding: 20px; font-size: 15px; font-weight: 800; color: #1e293b; cursor: pointer; list-style: none; outline: none; }
 .info-summary::-webkit-details-marker { display: none; }
 .info-summary::after { content: "＋"; float: right; color: #005bea; font-weight: 700; }
 details[open] .info-summary::after { content: "－"; }
@@ -215,7 +189,7 @@ details[open] .info-summary::after { content: "－"; }
 
 .consent-question { margin: 0 0 12px; font-size: 19px; font-weight: 950; color: #263d51; }
 .consent-options { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
-.consent-option { display: flex; align-items: center; gap: 14px; padding: 20px; border-radius: 20px; background: white; box-shadow: 0 8px 20px rgba(20, 30, 50, 0.03); font-size: 18px; font-weight: 700; color: #334155; border: 2px solid transparent; transition: all 0.2s; }
+.consent-option { display: flex; align-items: center; gap: 14px; padding: 20px; border-radius: 20px; background: white; box-shadow: 0 8px 20px rgba(20, 30, 50, 0.03); font-size: 18px; font-weight: 700; color: #334155; cursor: pointer; border: 2px solid transparent; transition: all 0.2s; }
 .consent-option:active { transform: scale(0.97); }
 .consent-option:has(input:checked) { border-color: #005bea; background: rgba(240, 247, 255, 0.5); color: #005bea; }
 .consent-option input { width: 24px; height: 24px; accent-color: #005bea; pointer-events: none; }
@@ -229,7 +203,7 @@ details[open] .info-summary::after { content: "－"; }
 .phone-input { width: 100%; height: 64px; border: 2px solid #e2e8f0; border-radius: 16px; padding: 0 20px; font-size: 22px; font-weight: 700; color: #0f172a; outline: none; transition: border 0.2s; background: #f8fafc; }
 .phone-input:focus { border-color: #005bea; background: white; }
 
-/* PC 대응 */
+/* PC 대응 및 아주 작은 기기 추가 대응 */
 @media (min-width: 700px) {
   .screen { max-width: 760px; margin: 0 auto; padding-left: 0; padding-right: 0; }
   .faq-screen { max-width: 860px; }
@@ -251,9 +225,7 @@ details[open] .info-summary::after { content: "－"; }
 @keyframes spin { to { transform: rotate(360deg); } }
 </style>
 </head>
-
-<!-- 모바일 사파리 및 안드로이드 브라우저 터치(:active) 즉시 반응을 위한 ontouchstart 속성 추가 -->
-<body ontouchstart="">
+<body>
 <div class="app">
 
 <!-- 1. FAQ 화면 -->
@@ -266,6 +238,7 @@ details[open] .info-summary::after { content: "－"; }
     <button class="lang-btn" onclick="changeLanguage('ja', this)">日本語</button>
   </div>
   
+  <!-- 언어 경고 배너 -->
   <div id="ui_langWarning" class="lang-warning hidden">
     📢 아쉽지만 이벤트 응모는 힘들어요!<br>그렇지만 항공보안 규정을 함께 알아보아요!
   </div>
@@ -301,7 +274,7 @@ details[open] .info-summary::after { content: "－"; }
 </section>
 
 <!-- 2. 공항 선택 화면 -->
-<section id="startScreen" class="screen start-screen hidden">
+<section id="startScreen" class="screen hidden">
   <div class="airport-section">
     <div class="section-heading"><h2 id="ui_aptTitle" class="section-title">출발 공항을 선택해주세요</h2><span id="ui_aptSub" class="section-sub">필수</span></div>
     <div class="airport-grid" id="ui_aptGrid">
@@ -412,8 +385,8 @@ details[open] .info-summary::after { content: "－"; }
 <div id="loading" class="loading hidden"><div class="spinner"></div><div id="ui_loadingText" class="loading-text" style="color: #0f172a; font-weight: 800;">데이터 저장 중...</div></div>
 
 <script>
-// ★★★ 여기에 복사해둔 구글 앱스스크립트 주소를 큰따옴표 안에 붙여넣으세요 ★★★
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxxxGwukzaqnCk-VbpjkLa3rbj1wO0m4Q3aKJ2yqjCjYgkjPsHlOTpK1kgSedj2Ud8diQ/exec"; 
+// ★★★ 구글 앱스스크립트 주소 (줄바꿈 없이 한 줄로 들어가야 합니다!) ★★★
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby-GJFxyXGMEatfWEUAWxfmTPXjLOLnTpDViKmJR7QjBjDGwg-1TluB3eLP8dXOjwRB/exec"; 
 
 let currentLang = 'ko';
 let isEventEligible = true;
@@ -479,7 +452,6 @@ const uiDict = {
 /* =====================================================
    FAQ & 퀴즈 번역 데이터
 ===================================================== */
-// 1. FAQ 데이터 (현재 한국어만 채워져있으며, 다른 언어 칸에 번역본을 넣으시면 됩니다)
 const faqData = {
   ko: {
     general: { title: "✈️ 기본 이용안내", items: [
@@ -523,7 +495,7 @@ const faqData = {
   if(faqData[lang].general.items.length < 2) faqData[lang] = faqData.ko;
 });
 
-// 2. 퀴즈 데이터 (다국어 번역 완료)
+// 2. 퀴즈 데이터
 const questionPool = [
 { cat:"신분확인", ans:"X",
   ko: { q:"모바일 신분증은 캡처 화면을 보여줘도 탑승에 사용할 수 있다.", exp:"현장에서 본인이 직접 모바일 신분증 앱을 실행하여 제시해야 합니다." },
@@ -644,10 +616,10 @@ function closeFaqList() {
 ===================================================== */
 function handleQuizStartBtn() {
   if (currentLang === 'ko') {
-    showScreen('startScreen');
+    showScreen('startScreen'); 
   } else {
-    selectedAirport = "Foreign_Language_Skip";
-    startQuiz();
+    selectedAirport = "Foreign_Language_Skip"; 
+    startQuiz(); 
   }
 }
 
@@ -660,7 +632,10 @@ function selectAirport(btn, apt) {
 }
 
 function startQuiz() {
-  if (currentLang === 'ko' && !selectedAirport) { alert("이용공항을 선택해주세요."); return; }
+  if (currentLang === 'ko' && !selectedAirport) {
+    alert("이용공항을 선택해주세요.");
+    return;
+  }
 
   questions = [...questionPool].sort(() => Math.random() - 0.5);
   currentQuestion = 0; score = 0; answers = [];
