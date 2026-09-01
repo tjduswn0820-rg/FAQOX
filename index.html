@@ -36,7 +36,7 @@ button, .faq-category-btn, .consent-option, summary, .back-btn, .lang-btn, .airp
 }
 
 /* =====================================================
-   START SCREEN (배경 장식물 터치 방해 금지 추가)
+   START SCREEN (배경 장식물 터치 방해 금지)
 ===================================================== */
 .start-screen { position: relative; overflow: hidden; }
 .start-screen::before {
@@ -265,6 +265,7 @@ details[open] .info-summary::after { content: "－"; }
     <button class="lang-btn" onclick="changeLanguage('ja', this)">日本語</button>
   </div>
   
+  <!-- 언어 경고 배너 -->
   <div id="ui_langWarning" class="lang-warning hidden">
     📢 아쉽지만 이벤트 응모는 힘들어요!<br>그렇지만 항공보안 규정을 함께 알아보아요!
   </div>
@@ -287,6 +288,7 @@ details[open] .info-summary::after { content: "－"; }
         <span id="ui_bannerTitle">💡 즐거운 연휴, 긴 대기줄에 지치지 마세요!<br>탑승을 기다리시는 동안 방금 읽은 내용으로<br><span class="highlight">간단한 퀴즈를 풀어보세요.</span></span><br>
         <span id="ui_bannerGiftText">정답을 맞히신 분들 중 추첨을 통해 모바일<br>기프티콘을 선물로 드립니다! 🎁</span>
       </p>
+      <!-- 퀴즈 시작 버튼 -->
       <button id="ui_quizStartBtn" class="start-quiz-btn" onclick="handleQuizStartBtn()">👉 1분 퀴즈 풀고 경품 응모하기 (터치)</button>
     </div>
   </div>
@@ -412,7 +414,7 @@ details[open] .info-summary::after { content: "－"; }
 
 <script>
 // ★★★ 구글 앱스스크립트 주소 (줄바꿈 없이 한 줄로 들어가야 합니다!) ★★★
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbytRthOhiZDY7Ee09C4vGSP00UWHBYjpI6K-onqkWKD1XyuuE_TkcG220nids50mWtabA/exec"; 
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx_ObS7xgi3DgxPr5onqYbC9fJUhRFwGvGdcooCqLE-QGXhS1RASr52nyOkQfZoWXrbJw/exec"; 
 
 let currentLang = 'ko';
 let isEventEligible = true;
@@ -699,6 +701,7 @@ function changeLanguage(lang, btn) {
   document.getElementById('ui_catId').textContent = uiDict[lang].catId;
   document.getElementById('ui_catSec').textContent = uiDict[lang].catSec;
   document.getElementById('ui_bannerTitle').innerHTML = uiDict[lang].bannerTitle;
+  document.getElementById('ui_bannerGiftText').innerHTML = uiDict[lang].bannerGiftText;
   document.getElementById('ui_backBtn').textContent = uiDict[lang].backBtn;
   document.getElementById('ui_aptTitle').textContent = uiDict[lang].aptTitle;
   document.getElementById('ui_aptSub').textContent = uiDict[lang].aptSub;
