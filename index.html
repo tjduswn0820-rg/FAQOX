@@ -322,7 +322,7 @@ details[open] .info-summary::after { content: "－"; }
 
 <section id="quizScreen" class="screen quiz-screen hidden">
   <div class="quiz-top">
-    <div class="quiz-info"><span id="ui_quizHeader" class="faq-subtitle" style="font-size:16px;">보안 검색 퀴즈</span><span id="questionNumber" class="quiz-number">1 / 5</span></div>
+    <div class="quiz-info" style="justify-content: flex-end;"><span id="questionNumber" class="quiz-number">1 / 5</span></div>
     <div class="progress"><div id="progressBar" class="progress-bar"></div></div>
   </div>
   <div class="question-area"><div id="questionContent"><div id="ui_quizGuide" class="question-guide">맞으면 O · 틀리면 X를 터치하세요</div><h2 id="question" class="question"></h2></div></div>
@@ -408,7 +408,7 @@ details[open] .info-summary::after { content: "－"; }
 
 <script>
 // ★★★ 구글 앱스스크립트 주소 (줄바꿈 없이 한 줄로 들어가야 합니다!) ★★★
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw3qgNn_s0d2MqxR4RrUTn5pD5T-r5YvfO9cpp2_oDleTvYyRCDjCq-V7GoqAqVMO97kQ/exec"; 
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbypol7mjeOJUFooqWJcgH72b3TrOl7VDzG7oe2nf8ZDzJeWlns5kzM_DnA_jzP9GJ3EeQ/exec"; 
 
 let currentLang = 'ko';
 let isEventEligible = true;
@@ -706,7 +706,6 @@ function changeLanguage(lang, btn) {
   document.getElementById('ui_aptTitle').textContent = uiDict[lang].aptTitle;
   document.getElementById('ui_aptSub').textContent = uiDict[lang].aptSub;
   document.getElementById('ui_aptNextBtn').textContent = uiDict[lang].aptNextBtn;
-  document.getElementById('ui_quizHeader').textContent = uiDict[lang].quizHeader;
   document.getElementById('ui_quizGuide').textContent = uiDict[lang].quizGuide;
   document.getElementById('ui_quizNextBtn').textContent = uiDict[lang].quizNextBtn;
   document.getElementById('ui_resTitle').textContent = uiDict[lang].resTitle;
