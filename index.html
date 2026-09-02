@@ -154,7 +154,7 @@ button, .faq-category-btn, .consent-option, summary, .back-btn, .lang-btn, .airp
 ===================================================== */
 .quiz-screen { justify-content: center; }
 .quiz-top { width: 100%; max-width: 760px; margin: 0 auto 30px auto; position: relative; z-index: 10; }
-.quiz-info { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; }
+.quiz-info { display: flex; align-items: center; justify-content: flex-end; margin-bottom: 15px; } /* 상단 타이틀 삭제 후 우측 정렬로 수정 */
 .quiz-number { font-size: 16px; font-weight: 800; color: #005bea; background: rgba(0, 91, 234, 0.1); padding: 6px 14px; border-radius: 20px; }
 .progress { width: 100%; height: 6px; border-radius: 6px; background: #e2e8f0; overflow: hidden; }
 .progress-bar { width: 0; height: 100%; border-radius: 6px; background: linear-gradient(90deg, #005bea, #00c6fb); transition: width 0.4s; }
@@ -322,6 +322,7 @@ details[open] .info-summary::after { content: "－"; }
 
 <section id="quizScreen" class="screen quiz-screen hidden">
   <div class="quiz-top">
+    <!-- 상단 보안 검색 퀴즈 텍스트 삭제 및 번호 우측 정렬 -->
     <div class="quiz-info" style="justify-content: flex-end;"><span id="questionNumber" class="quiz-number">1 / 5</span></div>
     <div class="progress"><div id="progressBar" class="progress-bar"></div></div>
   </div>
@@ -408,7 +409,7 @@ details[open] .info-summary::after { content: "－"; }
 
 <script>
 // ★★★ 구글 앱스스크립트 주소 (줄바꿈 없이 한 줄로 들어가야 합니다!) ★★★
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbypol7mjeOJUFooqWJcgH72b3TrOl7VDzG7oe2nf8ZDzJeWlns5kzM_DnA_jzP9GJ3EeQ/exec"; 
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz8uMNIumvRR56xQTysg7teqBl80oeCUphc0hi1RyQ7muU7suA8CINg_h1-bQDj7EYFsQ/exec"; 
 
 let currentLang = 'ko';
 let isEventEligible = true;
@@ -416,6 +417,7 @@ let currentFaqCategory = ""; // 현재 활성화된 카테고리를 추적하는
 
 /* =====================================================
    다국어 UI 번역 사전 (UI Dictionary)
+   ※ '한 번 더 풀어볼까요?' 안내 문구(tryAgain)가 추가되었습니다.
 ===================================================== */
 const uiDict = {
   ko: {
@@ -428,10 +430,11 @@ const uiDict = {
     quizStartBtnEvent: "👉 1분 퀴즈 풀고 경품 응모하기<br>(터치)", 
     quizStartBtnNormal: "👉 1분 퀴즈 풀어보기<br>(터치)",
     backBtn: "이전 페이지로 돌아가기", aptTitle: "출발 공항을 선택해주세요", aptSub: "필수", aptNextBtn: "퀴즈 시작하기 →",
-    quizHeader: "보안 검색 퀴즈", quizGuide: "맞으면 O · 틀리면 X를 터치하세요", quizNextBtn: "다음 →",
+    quizGuide: "맞으면 O · 틀리면 X를 터치하세요", quizNextBtn: "다음 →",
     resTitle: "분석 완료", resScoreLabel: "보안 퀴즈 점수", resEventBtn: "이벤트 응모하기 🎁", resHomeBtn: "처음으로 돌아가기 🏠",
     msgPerfect: "완벽합니다! 🎉\n항공보안 상식을 완벽하게 숙지하고 계십니다.", msgGood: "훌륭합니다! 👍\n조금만 더 확인하시면 완벽한 여행이 될 것입니다.", msgTry: "수고하셨습니다! 😊\n공항 이용 전 항공보안 FAQ를 한 번 더 체크해주세요.",
-    expCorrect: "⭕ 맞았습니다!", expIncorrect: "❌ 오답입니다.", loadingText: "데이터 처리 중..."
+    expCorrect: "⭕ 맞았습니다!", expIncorrect: "❌ 오답입니다.", loadingText: "데이터 처리 중...", 
+    tryAgain: "한 번 더 풀어볼까요?"
   },
   en: {
     langWarning: "📢 Unfortunately, event entry is not available!<br>However, let's learn about aviation security rules together!",
@@ -443,10 +446,11 @@ const uiDict = {
     quizStartBtnEvent: "", 
     quizStartBtnNormal: "👉 Take a 1-Minute Quiz<br>(Tap)",
     backBtn: "Go Back", aptTitle: "Please select your departure airport", aptSub: "Required", aptNextBtn: "Start Quiz →",
-    quizHeader: "Security Quiz", quizGuide: "Tap O for True, X for False", quizNextBtn: "Next →",
+    quizGuide: "Tap O for True, X for False", quizNextBtn: "Next →",
     resTitle: "Analysis Complete", resScoreLabel: "Security Quiz Score", resEventBtn: "", resHomeBtn: "Return to Home 🏠",
     msgPerfect: "Perfect! 🎉\nYou are fully aware of aviation security rules.", msgGood: "Great job! 👍\nJust a little more review will ensure a perfect trip.", msgTry: "Good effort! 😊\nPlease review the FAQ once more before your flight.",
-    expCorrect: "⭕ Correct!", expIncorrect: "❌ Incorrect.", loadingText: "Processing data..."
+    expCorrect: "⭕ Correct!", expIncorrect: "❌ Incorrect.", loadingText: "Processing data...", 
+    tryAgain: "Want to try again?"
   },
   zh: {
     langWarning: "📢 很遗憾，您无法参加活动！<br>但是，让我们一起了解航空安保规定吧！",
@@ -458,10 +462,11 @@ const uiDict = {
     quizStartBtnEvent: "", 
     quizStartBtnNormal: "👉 参加1分钟小测验<br>(点击)",
     backBtn: "返回上一页", aptTitle: "请选择出发机场", aptSub: "必选", aptNextBtn: "开始测验 →",
-    quizHeader: "安保测验", quizGuide: "正确请点击 O，错误请点击 X", quizNextBtn: "下一步 →",
+    quizGuide: "正确请点击 O，错误请点击 X", quizNextBtn: "下一步 →",
     resTitle: "分析完成", resScoreLabel: "安保测验得分", resEventBtn: "", resHomeBtn: "返回首页 🏠",
     msgPerfect: "太棒了！🎉\n您对航空安保常识了如指掌。", msgGood: "做得好！👍\n再多了解一点，您的旅行将更加完美。", msgTry: "辛苦了！😊\n使用机场前，请再次查看航空安保FAQ。",
-    expCorrect: "⭕ 回答正确！", expIncorrect: "❌ 回答错误。", loadingText: "数据处理中..."
+    expCorrect: "⭕ 回答正确！", expIncorrect: "❌ 回答错误。", loadingText: "数据处理中...", 
+    tryAgain: "要不要再试一次？"
   },
   ja: {
     langWarning: "📢 残念ながらイベントには応募できません！<br>しかし、航空保安規定について一緒に学びましょう！",
@@ -473,10 +478,11 @@ const uiDict = {
     quizStartBtnEvent: "", 
     quizStartBtnNormal: "👉 1分間クイズを解いてみる<br>(タップ)",
     backBtn: "前のページに戻る", aptTitle: "出発空港を選択してください", aptSub: "必須", aptNextBtn: "クイズを始める →",
-    quizHeader: "保安検査クイズ", quizGuide: "正解ならO・不正解ならXをタップ", quizNextBtn: "次へ →",
+    quizGuide: "正解ならO・不正解ならXをタップ", quizNextBtn: "次へ →",
     resTitle: "分析完了", resScoreLabel: "保安クイズ スコア", resEventBtn: "", resHomeBtn: "最初に戻る 🏠",
     msgPerfect: "完璧です！🎉\n航空保安の常識をしっかりと熟知されていますね。", msgGood: "素晴らしいです！👍\nもう少し確認すれば完璧な旅行になりますよ。", msgTry: "お疲れ様でした！😊\n空港をご利用の前に、もう一度FAQをご確認ください。",
-    expCorrect: "⭕ 正解です！", expIncorrect: "❌ 不正解です。", loadingText: "データ処理中..."
+    expCorrect: "⭕ 正解です！", expIncorrect: "❌ 不正解です。", loadingText: "データ処理中...", 
+    tryAgain: "もう一度解いてみますか？"
   }
 };
 
@@ -695,7 +701,7 @@ function changeLanguage(lang, btn) {
   // 정적 UI 텍스트 교체 (강제 줄바꿈 코드가 있는 항목은 innerHTML 처리)
   document.getElementById('ui_faqSub').innerHTML = uiDict[lang].faqSub;
   document.getElementById('ui_faqTitle').textContent = uiDict[lang].faqTitle;
-  document.getElementById('ui_faqDesc').innerHTML = uiDict[lang].faqDesc; 
+  document.getElementById('ui_faqDesc').textContent = uiDict[lang].faqDesc; 
   
   document.getElementById('ui_catGeneral').textContent = uiDict[lang].catGeneral;
   document.getElementById('ui_catId').textContent = uiDict[lang].catId;
@@ -785,6 +791,7 @@ function startQuiz() {
 
 function renderQuestion() {
   const q = questions[currentQuestion];
+  q.isScored = false; // ★ 중복 채점 방지를 위한 상태 초기화
   document.getElementById("questionNumber").textContent = (currentQuestion + 1) + " / " + questions.length;
   document.getElementById("progressBar").style.width = (((currentQuestion + 1) / questions.length) * 100) + "%";
   
@@ -806,17 +813,33 @@ function selectAnswer(ans) {
   const box = document.getElementById("explanationBox");
   const title = document.querySelector("#explanationBox .explanation-title");
   
+  let expText = q[currentLang].exp; // 기본 해설 텍스트 할당
+
   if (ans === q.ans) { 
     box.classList.remove("incorrect"); 
     title.innerHTML = uiDict[currentLang].expCorrect; 
-    score++; 
+    
+    // ★ 정답으로 바꿨을 때 점수 올리기 (중복 방지)
+    if (!q.isScored) { 
+      score++; 
+      q.isScored = true; 
+    }
   } else { 
     box.classList.add("incorrect"); 
     title.innerHTML = uiDict[currentLang].expIncorrect; 
+    
+    // ★ 오답으로 바꿨을 때 점수 내리기 (이미 올랐던 경우만)
+    if (q.isScored) { 
+      score--; 
+      q.isScored = false; 
+    }
+    
+    // 오답일 때만 '한 번 더 풀어볼까요?' 문구 추가
+    expText += "<br><br><span style='color:#e11d48; font-weight:800;'>👉 " + uiDict[currentLang].tryAgain + "</span>";
   }
   
-  // 현재 언어에 맞는 해설 출력
-  document.getElementById("explanationText").innerHTML = q[currentLang].exp;
+  // 최종 해설 텍스트 적용 및 버튼 노출
+  document.getElementById("explanationText").innerHTML = expText;
   box.classList.remove("hidden"); document.getElementById("nextButton").classList.remove("hidden");
 }
 
